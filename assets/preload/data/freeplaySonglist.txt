@@ -1,0 +1,5 @@
+Ron:ron:1
+Wasted:ron-angry:1
+Ayo:ron-mad:1
+Bloodshed:hellron:1
+bleeding:hellron:1
