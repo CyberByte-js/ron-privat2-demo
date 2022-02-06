@@ -388,6 +388,12 @@ class TitleState extends MusicBeatState
 				pressedSkip = true;
 				FlxG.switchState(new AntiPiracyState());
 			}
+			if (FlxG.keys.justPressed.E)
+			{
+				// i feel i should put something here
+				pressedSkip = true;
+				FlxG.switchState(new EndingState());
+			}
 		}
 
 		super.update(elapsed);

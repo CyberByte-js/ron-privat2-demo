@@ -21,7 +21,7 @@ class EndingState extends FlxState
 		var end:FlxSprite = new FlxSprite(0, 0);
 		if (_goodEnding)
             {
-			end.loadGraphic(Paths.image("ron/fard"));
+			end.loadGraphic(Paths.image("updateron/misc/splashscreen"));
 			end.screenCenter(X);
 			end.screenCenter(Y);
 			FlxG.sound.playMusic(Paths.music("endmusic"),1,false);
@@ -30,7 +30,7 @@ class EndingState extends FlxState
         {
 			// need this or it wont work also changed ending thingy AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
             // i've been testing this for like 30 minutes now and it doesn't wanna swtich what
-			end.loadGraphic(Paths.image("ron/fard"));
+			end.loadGraphic(Paths.image("updateron/misc/splashscreen"));
 			end.screenCenter(X);
 			end.screenCenter(Y);
 			FlxG.sound.playMusic(Paths.music("endmusic"),1,false);
@@ -39,7 +39,7 @@ class EndingState extends FlxState
 		FlxG.camera.fade(FlxColor.BLACK, 0.8, true);
 		
 		
-		new FlxTimer().start(30, endIt);
+		new FlxTimer().start(120, endIt);
 
 		trace("it went to the stage at least i think");
 		
