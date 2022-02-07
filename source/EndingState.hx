@@ -24,6 +24,8 @@ class EndingState extends FlxState
 			end.loadGraphic(Paths.image("updateron/misc/splashscreen"));
 			end.screenCenter(X);
 			end.screenCenter(Y);
+			end.setGraphicSize(Std.int(end.width * 0.9));
+			end.setGraphicSize(Std.int(end.height * 0.9));
 			FlxG.sound.playMusic(Paths.music("endmusic"),1,false);
 		}
         else
@@ -33,6 +35,8 @@ class EndingState extends FlxState
 			end.loadGraphic(Paths.image("updateron/misc/splashscreen"));
 			end.screenCenter(X);
 			end.screenCenter(Y);
+			end.setGraphicSize(Std.int(end.width * 0.9));
+			end.setGraphicSize(Std.int(end.height * 0.9));
 			FlxG.sound.playMusic(Paths.music("endmusic"),1,false);
 		}
 		add(end);
@@ -58,7 +62,7 @@ class EndingState extends FlxState
 	
 	public function endIt(e:FlxTimer=null){
         trace("ME WHEN THE uhh IS THE END *aflac the end starts playing*");
-		FlxG.switchState(new StoryMenuState());
+		FlxG.switchState(new MainMenuState());
 	}
 	
 }
