@@ -266,6 +266,21 @@ class DialogueBox extends FlxSpriteGroup
 			box.y = 375;
 		}
 
+		if (StringTools.contains(dialogueList[0], 'sussy'))
+		{
+			dialogueList[0] = dialogueList[0].substr(5).trim();
+			FlxG.sound.play(Paths.sound('among'), 1);
+		} 
+		if (StringTools.contains(dialogueList[0], 'static'))
+		{
+			dialogueList[0] = dialogueList[0].substr(6).trim();
+			FlxG.sound.play(Paths.sound('static'), 1);
+		} 
+		if (StringTools.contains(dialogueList[0], 'vine'))
+		{
+			dialogueList[0] = dialogueList[0].substr(4).trim();
+			FlxG.sound.play(Paths.sound('vine'), 1);
+		}
 		swagDialogue.resetText(dialogueList[0]);
 		swagDialogue.start(0.04, true);
 		if ((StringTools.contains(curCharacter, 'ron')) || (StringTools.contains(curCharacter, 'Ron')))
