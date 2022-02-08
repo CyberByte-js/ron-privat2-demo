@@ -377,9 +377,9 @@ class StoryMenuState extends MusicBeatState
 
 	function changeDifficulty(change:Int = 0):Void
 	{
-		curDifficulty += change;
 		if (curWeek == 1)
 			change = 0;
+		curDifficulty += change;
 
 		if (curDifficulty < 0)
 			curDifficulty = 2;
