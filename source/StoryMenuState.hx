@@ -378,6 +378,8 @@ class StoryMenuState extends MusicBeatState
 	function changeDifficulty(change:Int = 0):Void
 	{
 		curDifficulty += change;
+		if (curWeek == 1)
+			change = 0;
 
 		if (curDifficulty < 0)
 			curDifficulty = 2;
@@ -426,6 +428,8 @@ class StoryMenuState extends MusicBeatState
 			curWeek = 0;
 		if (curWeek < 0)
 			curWeek = weekData.length - 1;
+			
+		changeDifficulty();
 			
 		if (!weekUnlocked[curWeek])
 		{
