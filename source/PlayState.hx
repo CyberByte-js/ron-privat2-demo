@@ -397,6 +397,8 @@ class PlayState extends MusicBeatState
 						dialogue = CoolUtil.coolTextFile(Paths.txt('ayo/diaman'));
 			case 'bloodshed':
 						dialogue = CoolUtil.coolTextFile(Paths.txt('bloodshed/diamane'));
+			case 'bleeding':
+						dialogue = CoolUtil.coolTextFile(Paths.txt('bleeding/diamane'));
 			case 'bloodshed-b':
 						dialogue = CoolUtil.coolTextFile(Paths.txt('bloodshed-b/diamane'));
 			case 'bloodshed-old':
@@ -1865,7 +1867,7 @@ class PlayState extends MusicBeatState
 		trace('starting');
 		remove(loadingScreen);
 				
-
+		setChrome(0.0);
 			switch (StringTools.replace(curSong," ", "-").toLowerCase())
 			{
 				case 'ron':
@@ -1879,54 +1881,15 @@ class PlayState extends MusicBeatState
 					add(fx);
 					add(Estatic);
 					FlxTween.tween(Estatic, {"scale.x":0.8,"scale.y":0.8}, 0.5, {ease: FlxEase.quadInOut, type: PINGPONG});
+					setChrome(FlxG.save.data.rgbintense/350);
 				case 'bleeding':
-					startCountdown();
+					schoolIntro(doof);
 					add(fx);
 					add(Estatic);
 					FlxTween.tween(Estatic, {"scale.x":0.8,"scale.y":0.8}, 0.5, {ease: FlxEase.quadInOut, type: PINGPONG});
-				case 'not-bloodshed':
-					startCountdown();
-					add(fx);
-					add(Estatic);
-					FlxTween.tween(Estatic, {"scale.x":0.8,"scale.y":0.8}, 0.5, {ease: FlxEase.quadInOut, type: PINGPONG});
-				case 'bloodshed-two':
-					startCountdown();
-					add(fx);
-					add(Estatic);
-					add(Estatic2);
-					FlxTween.tween(Estatic, {"scale.x":0.8,"scale.y":0.8}, 0.5, {ease: FlxEase.quadInOut, type: PINGPONG});
+					setChrome(FlxG.save.data.rgbintense/350);
 				case 'pretty-wacky':
 					schoolIntro(doof);
-				case 'bloodshed-old':
-					schoolIntro(doof);
-					add(fx);
-					add(Estatic);
-					firebg.alpha = 1;
-				case 'trojan-virus':
-					schoolIntro(doof);
-					add(Estatic);
-					add(ronAnimation);
-				case 'file-manipulation':
-					schoolIntro(doof);
-					add(ronAnimation);
-					add(Estatic2);
-					FlxTween.tween(Estatic2, {"scale.x":0.8,"scale.y":0.8}, 0.5, {ease: FlxEase.quadInOut, type: PINGPONG});
-					add(Estatic);
-				case 'trojan-virus-b':
-					add(Estatic);
-					startCountdown();
-				case 'file-manipulation-b':
-					add(Estatic);
-					startCountdown();
-				case 'atelophobia':
-					camFollow.y = dad.getMidpoint().y;
-					camFollow.x = dad.getMidpoint().x + 300;
-					FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / (cast (Lib.current.getChildAt(0), Main)).getFPS()));
-					schoolIntro(doof);
-				case 'bloodshed-b':
-					schoolIntro(doof);
-					add(fx);
-					gf.visible = false;
 				case 'holy-shit-dave-fnf':
 					schoolIntro2(doof2, false);
 				default:
@@ -3411,6 +3374,11 @@ class PlayState extends MusicBeatState
 
 				if (dad.curCharacter == 'hellron-pov')
 					pov = 333;
+				if (dad.curCharacter == 'hellron-drippin')
+				{
+					offsetX -= 80;
+					offsetY -= 80;
+				}
 				if (dad.curCharacter == 'ron-usb')
 					trojan = 180;
 				if ((FlxG.save.data.cameraenable) && (dad.curCharacter != 'bijuuron') && (dad.curCharacter != 'hellron-pov') && (SONG.stage != 'bambiFarm') && (PlayState.SONG.stage != 'daveHouse'))
@@ -5213,16 +5181,31 @@ class PlayState extends MusicBeatState
 			switch (curStep)
 			{
 				case 256:
+					var xx = dad.x;
+					var yy = dad.y;
+					remove(dad);
+					dad = new Character(xx-80, yy-80, 'hellron-drippin');
+					add(dad);
 					defaultCamZoom += 0.1;
 				case 384:
 					defaultCamZoom += 0.15;
 				case 512:
+					var xx = dad.x;
+					var yy = dad.y;
+					remove(dad);
+					dad = new Character(xx+80, yy+80, 'hellron');
+					add(dad);
 					defaultCamZoom -= 0.25;
 				case 664:
 					defaultCamZoom += 0.3;
 				case 672:
 					defaultCamZoom -= 0.3;
 				case 768:
+					var xx = dad.x;
+					var yy = dad.y;
+					remove(dad);
+					dad = new Character(xx-80, yy-80, 'hellron-drippin');
+					add(dad);
 					FlxTween.tween(firebg, {alpha: 1}, 1, {ease: FlxEase.quadInOut});
 					defaultCamZoom += 0.1;
 				case 832:

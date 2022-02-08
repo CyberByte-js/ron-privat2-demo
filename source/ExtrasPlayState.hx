@@ -26,7 +26,7 @@ class ExtrasPlayState extends MusicBeatState
 
 	var selector:FlxText;
 	var curSelected:Int = 0;
-	var curDifficulty:Int = 1;
+	var curDifficulty:Int = 2;
 	var bg:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
@@ -209,26 +209,6 @@ class ExtrasPlayState extends MusicBeatState
 
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 
-		if (gamepad != null)
-		{
-			if (gamepad.justPressed.DPAD_UP)
-			{
-				changeSelection(-1);
-			}
-			if (gamepad.justPressed.DPAD_DOWN)
-			{
-				changeSelection(1);
-			}
-			if (gamepad.justPressed.DPAD_LEFT)
-			{
-				changeDiff(-1);
-			}
-			if (gamepad.justPressed.DPAD_RIGHT)
-			{
-				changeDiff(1);
-			}
-		}
-
 		if (upP)
 		{
 			changeSelection(-1);
@@ -237,11 +217,6 @@ class ExtrasPlayState extends MusicBeatState
 		{
 			changeSelection(1);
 		}
-
-		if (FlxG.keys.justPressed.LEFT)
-			changeDiff(-1);
-		if (FlxG.keys.justPressed.RIGHT)
-			changeDiff(1);
 
 		if (controls.BACK)
 		{
@@ -299,20 +274,7 @@ class ExtrasPlayState extends MusicBeatState
 	{
 		curDifficulty += change;
 
-		if (songs[curSelected].songName.contains("-b"))
-		{
-			if (curDifficulty < 0)
-				curDifficulty = 2;
-			if (curDifficulty > 2)
-				curDifficulty = 0;
-		}
-		else
-		{
-			if (curDifficulty < 0)
-				curDifficulty = 3;
-			if (curDifficulty > 3)
-				curDifficulty = 0;
-		}
+		curDifficulty = 2;
 
 		// adjusting the highscore song name to be compatible (changeDiff)
 		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-");

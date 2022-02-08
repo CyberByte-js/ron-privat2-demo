@@ -51,7 +51,7 @@ class DialogueBox extends FlxSpriteGroup
 	public function new(talkingRight:Bool = true, ?dialogueList:Array<String>)
 	{
 		super();
-		if (PlayState.SONG.song.toLowerCase() == 'bloodshed' || PlayState.SONG.song.toLowerCase() == 'bloodshed-old' || PlayState.SONG.song.toLowerCase() == 'bloodshed-b')
+		if (PlayState.SONG.song.toLowerCase() == 'bloodshed' || PlayState.SONG.song.toLowerCase() == 'bloodshed-old' || PlayState.SONG.song.toLowerCase() == 'bloodshed-b' || PlayState.SONG.song.toLowerCase() == 'bleeding')
 		{
 			FlxG.sound.playMusic(Paths.music('bloodshed-dialogue-mus'), 0);
 				FlxG.sound.music.fadeIn(1, 0, 0.8);
@@ -72,7 +72,7 @@ class DialogueBox extends FlxSpriteGroup
 		var hasDialog = false;
 		switch (PlayState.SONG.song.toLowerCase())
 		{
-			case 'ron' | 'ayo' | 'wasted' | 'bloodshed' | 'trojan-virus' | 'file-manipulation' | 'atelophobia' | 'factory-reset' | 'bloodshed-old' | 'pretty-wacky' | 'bloodshed-b':
+			case 'ron' | 'ayo' | 'wasted' | 'bloodshed' | 'trojan-virus' | 'file-manipulation' | 'atelophobia' | 'factory-reset' | 'bloodshed-old' | 'pretty-wacky' | 'bloodshed-b' | 'bleeding':
 				hasDialog = true;
 				box.frames = Paths.getSparrowAtlas('speech_bubble_talking', 'shared');
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
@@ -202,7 +202,7 @@ class DialogueBox extends FlxSpriteGroup
 				{
 					isEnding = true;
 
-					if (PlayState.SONG.song.toLowerCase() == 'ron' || PlayState.SONG.song.toLowerCase() == 'trojan-virus' || PlayState.SONG.song.toLowerCase() == 'file-manipulation' || PlayState.SONG.song.toLowerCase() == 'factory-reset' || PlayState.SONG.song.toLowerCase() == 'pretty-wacky' || PlayState.SONG.song.toLowerCase() == 'bloodshed-b')
+					if (PlayState.SONG.song.toLowerCase() == 'ron' || PlayState.SONG.song.toLowerCase() == 'trojan-virus' || PlayState.SONG.song.toLowerCase() == 'file-manipulation' || PlayState.SONG.song.toLowerCase() == 'factory-reset' || PlayState.SONG.song.toLowerCase() == 'pretty-wacky' || PlayState.SONG.song.toLowerCase() == 'bloodshed-b' || PlayState.SONG.song.toLowerCase() == 'bleeding')
 						FlxG.sound.music.fadeOut(2.2, 0);
 					else if (PlayState.SONG.song.toLowerCase() == 'atelophobia')
 					{
