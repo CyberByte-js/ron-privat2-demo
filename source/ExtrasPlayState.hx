@@ -422,15 +422,15 @@ class ExtrasPlayState extends MusicBeatState
 		switch (curSelected)
 		{
 			case 0:
-				clr = FlxColor.BLACK;
+				clr = FlxColor.RED;
 			case 1:
 				clr = FlxColor.LIME;
-			case 1:
-				clr = FlxColor.BLUE;
 			case 2:
-				clr = FlxColor.WHITE;
+				clr = FlxColor.BLUE;
 			case 3:
-				clr = FlxColor.RED;
+				clr = FlxColor.WHITE;
+			case 4:
+				clr = FlxColor.BLACK;
 		}
 		
 		if(clr != intendedColor) {
