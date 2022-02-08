@@ -2662,12 +2662,7 @@ class PlayState extends MusicBeatState
 								skin = 'NOTEold_assets';
 						}
 						
-						if (force)
-						{
-							babyArrow.frames = Paths.getSparrowAtlas(sskin);
-						}
-						else
-							babyArrow.frames = Paths.getSparrowAtlas(skin);
+						babyArrow.frames = Paths.getSparrowAtlas(skin);
 						babyArrow.animation.addByPrefix('green', 'arrowUP');
 						babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
 						babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
