@@ -3376,8 +3376,8 @@ class PlayState extends MusicBeatState
 					pov = 333;
 				if (dad.curCharacter == 'hellron-drippin')
 				{
-					offsetX -= 80;
-					offsetY -= 80;
+					offsetX -= 120;
+					offsetY += 80;
 				}
 				if (dad.curCharacter == 'ron-usb')
 					trojan = 180;
