@@ -1783,7 +1783,7 @@ class PlayState extends MusicBeatState
 				healthBar.createFilledBar(0xFFFF0000, bfcolor);
 			case 'bijuuron':
 				dad.x -= 80;
-				dad.y += 120;
+				dad.y += 250;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
 				healthBar.createFilledBar(0xFFEBDD44, bfcolor);
 			case 'susron':
@@ -2664,9 +2664,6 @@ class PlayState extends MusicBeatState
 						
 						if (force)
 						{
-							var sskin = 'NOTE_assets';
-							if (SONG.player1 == 'ronDave')
-								sskin = 'NOTEold_assets';
 							babyArrow.frames = Paths.getSparrowAtlas(sskin);
 						}
 						else
@@ -3720,8 +3717,8 @@ class PlayState extends MusicBeatState
 									multiplier = 1;
 								else
 									multiplier = multiplier + ((1-health));
-								FlxG.camera.shake(0.025 * multiplier, 0.1);
-								camHUD.shake(0.0055 * multiplier, 0.15);
+								FlxG.camera.shake(0.025 * multiplier/4, 0.1);
+								camHUD.shake(0.0055 * multiplier/4, 0.15);
 								if (health > 0.03)
 									health -= 0.014;
 								else
@@ -5066,7 +5063,31 @@ class PlayState extends MusicBeatState
 
 	override function stepHit()
 	{
-		if (curSong == 'Bloodshed' || curSong == 'not-bloodshed') {
+		if (curSong == 'Ayo')
+		{
+			switch (curStep) {
+				case 892:
+					var bruh:FlxSprite = new FlxSprite();
+					bruh.loadGraphic(Paths.image('ron/longbob'));
+					bruh.antialiasing = true;
+					bruh.active = false;
+					bruh.scrollFactor.set();
+					bruh.screenCenter();
+					add(bruh);
+					FlxTween.tween(bruh, {alpha: 0},1, {
+						ease: FlxEase.cubeInOut,
+						onComplete: function(twn:FlxTween) 
+						{
+							bruh.destroy();
+						}
+					});
+				case 1148:
+					FlxTween.tween(FlxG.camera, {zoom: 1.5}, 0.4, {ease: FlxEase.expoOut,});
+					dad.playAnim('cheer', true);
+			}
+		}
+
+		if (curSong == 'Bloodshed') {
 			healthBarBG.alpha = 0;
 			healthBar.alpha = 0;
 			iconP1.visible = true;

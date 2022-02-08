@@ -404,6 +404,21 @@ class Character extends FlxSprite
 				addOffset("singLEFT", 75, 30);
 				addOffset("singRIGHT");
 				addOffset("singDOWN", 25, -60);
+			case 'bijuuron':
+				frames = Paths.getSparrowAtlas('updateron/characters/kill_yourself');
+				animation.addByPrefix('idle', 'idle', 24, true);
+				animation.addByPrefix('singUP', 'up', 36, false);
+				animation.addByPrefix('singDOWN', 'down', 36, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+
+				addOffset('idle');
+				addOffset("singUP", 0, 940);
+				addOffset("singRIGHT", 0, -11);
+				addOffset("singLEFT", 25, -20);
+				addOffset("singDOWN", 0, -79);
+				
+				playAnim('idle');
 			case 'demonron':
 				tex = Paths.getSparrowAtlas('updateron/characters/demonron');
 				frames = tex;

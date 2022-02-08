@@ -248,7 +248,7 @@ class ExtrasPlayState extends MusicBeatState
 			FlxG.switchState(new MasterPlayState());
 		}
 		
-		if (songs[curSelected].songName == 'BLOODSHED-TWO')
+		if (songs[curSelected].songName == 'bleeding')
 		{
 			fdiffText.visible = true;
 			diffText.visible = false;
@@ -276,7 +276,7 @@ class ExtrasPlayState extends MusicBeatState
 
 			trace(poop);
 			
-			if (songs[curSelected].songName == 'BLOODSHED-TWO')
+			if (songs[curSelected].songName == 'bleeding')
 				PlayState.storyDifficulty = 2;
 			else
 				PlayState.storyDifficulty = curDifficulty;
@@ -321,7 +321,7 @@ class ExtrasPlayState extends MusicBeatState
 			case 'Philly-Nice': songHighscore = 'Philly';
 		}
 		
-		if (songHighscore == 'BLOODSHED-TWO')
+		if (songHighscore == 'bleeding')
 			curDifficulty = 2;
 		
 		#if !switch
@@ -423,6 +423,14 @@ class ExtrasPlayState extends MusicBeatState
 		{
 			case 0:
 				clr = FlxColor.BLACK;
+			case 1:
+				clr = FlxColor.LIME;
+			case 1:
+				clr = FlxColor.BLUE;
+			case 2:
+				clr = FlxColor.WHITE;
+			case 3:
+				clr = FlxColor.RED;
 		}
 		
 		if(clr != intendedColor) {

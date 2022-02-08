@@ -260,11 +260,12 @@ class DialogueBox extends FlxSpriteGroup
 			dialogueList[0] = dialogueList[0].substr(4).trim();
 			emote = true;
 			box.y = 315;
-		}
+		} 
 		else
 		{
 			box.y = 375;
 		}
+
 		swagDialogue.resetText(dialogueList[0]);
 		swagDialogue.start(0.04, true);
 		if ((StringTools.contains(curCharacter, 'ron')) || (StringTools.contains(curCharacter, 'Ron')))

@@ -25,6 +25,7 @@ class StoryMenuState extends MusicBeatState
 	var scoreText:FlxText;
 	var weekData:Array<Dynamic> = [
 		['Ron', 'Wasted', 'Ayo', 'Bloodshed'],
+		['Bloodbath', 'Bijuu', 'Holy-Shit-Dave-Fnf', 'Pretty-Wacky', 'Bleeding']
 	];
 
 	var curDifficulty:Int = 1;
@@ -33,10 +34,12 @@ class StoryMenuState extends MusicBeatState
 
 	var weekCharacters:Array<Dynamic> = [
 		['ron', 'bf', 'gf'],
+		['ron2', 'bf', 'gf']
 	];
 
 	var weekNames:Array<String> = [
 		"VS COOL GUY B)",
+		"Freeplay extras"
 	];
 
 	var txtWeekTitle:FlxText;
@@ -68,11 +71,6 @@ class StoryMenuState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Story Mode Menu", null);
 		#end
-		
-		if (FlxG.save.data.douyhelikescheese)
-			weekUnlocked = [true, true, true, true, true, true];
-		else
-			weekUnlocked = [true, true, true, true, true, false];
 
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
@@ -89,7 +87,7 @@ class StoryMenuState extends MusicBeatState
 		scoreText.setFormat("VCR OSD Mono", 32);
 		
 		copyright = new FlxText(FlxG.width * 0.72, 600, 0, "", 32);
-		copyright.setFormat(Paths.font("w95.otf"), 24, FlxColor.WHITE, LEFT);
+		copyright.setFormat(Paths.font("w95.otf"), 24, FlxColor.RED, LEFT);
 
 		txtWeekTitle = new FlxText(FlxG.width * 0.7, 10, 0, "", 32);
 		txtWeekTitle.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, RIGHT);
@@ -220,111 +218,13 @@ class StoryMenuState extends MusicBeatState
 
 		difficultySelectors.visible = weekUnlocked[curWeek];
 		
-		if ((curDifficulty == 3) && (curWeek == 1))
-			warning = "(Hard mode recommended)";
+		if ((curDifficulty == 3) && (curWeek == 0))
+			copyright.text = "(Hard mode recommended)";
 		else
-			warning = "";
+			copyright.text = "";
 		
-		if (!FlxG.save.data.coolronweekcopyright)
-			copyright.text = "Copyright mode: Off\rC: toggle\r" + warning;
-		else
-			copyright.text = "Copyright mode: On\rC: toggle\r" + warning;
 		if (FlxG.keys.justPressed.C)
 				FlxG.save.data.coolronweekcopyright = !FlxG.save.data.coolronweekcopyright;
-
-		if (FlxG.keys.justPressed.ANY)
-		{
-			if (FlxG.keys.justPressed.A)
-			{
-				secret += 'a';
-			}
-			else if (FlxG.keys.justPressed.B)
-			{
-				secret += 'b';
-			}
-			else if (FlxG.keys.justPressed.D)
-			{
-				secret += 'd';
-			}
-			else if (FlxG.keys.justPressed.E)
-			{
-				secret += 'e';
-			}
-			else if (FlxG.keys.justPressed.F)
-			{
-				secret += 'f';
-			}
-			else if (FlxG.keys.justPressed.G)
-			{
-				secret += 'g';
-			}
-			else if (FlxG.keys.justPressed.H)
-			{
-				secret += 'h';
-			}
-			else if (FlxG.keys.justPressed.I)
-			{
-				secret += 'i';
-			}
-			else if (FlxG.keys.justPressed.K)
-			{
-				secret += 'k';
-			}
-			else if (FlxG.keys.justPressed.L)
-			{
-				secret += 'l';
-			}
-			else if (FlxG.keys.justPressed.N)
-			{
-				secret += 'n';
-			}
-			else if (FlxG.keys.justPressed.O)
-			{
-				secret += 'o';
-			}
-			else if (FlxG.keys.justPressed.R)
-			{
-				secret += 'r';
-			}
-			else if (FlxG.keys.justPressed.S)
-			{
-				secret += 's';
-			}
-			else if (FlxG.keys.justPressed.T)
-			{
-				secret += 't';
-			}
-			else if (FlxG.keys.justPressed.U)
-			{
-				secret += 'u';
-			}
-			else if (FlxG.keys.justPressed.V)
-			{
-				secret += 'v';
-			}
-			
-			if (secret.length >= 46)
-			{
-				if (secret == 'helikestotalkaboutitanditshisfavoritethingever')
-				{
-					FlxG.save.data.douyhelikescheese = !FlxG.save.data.douyhelikescheese;
-					FlxG.save.flush();
-					if (FlxG.save.data.douyhelikescheese)
-						weekUnlocked = [true, true, true, true, true, true];
-					else
-						weekUnlocked = [true, true, true, true, true, false];
-					
-					secretPng.alpha = 1;
-					FlxTween.tween(secretPng, {alpha: 0}, 1);
-					FlxG.sound.play(Paths.sound('hi'));
-				}
-				else
-				{
-					FlxG.sound.play(Paths.sound('cancelMenu'));
-				}
-				secret = '';
-			}
-		}
 
 		if (!movedBack)
 		{
@@ -433,9 +333,6 @@ class StoryMenuState extends MusicBeatState
 
 
 			PlayState.storyDifficulty = curDifficulty;
-			if ((curDifficulty == 3) && (curWeek == 0))
-				PlayState.storyPlaylist = ['Ron', 'Wasted', 'Ayo', 'Bleeding'];
-
 			// adjusting the song name to be compatible
 			var songFormat = StringTools.replace(PlayState.storyPlaylist[0], " ", "-");
 			switch (songFormat) {

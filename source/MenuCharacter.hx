@@ -33,10 +33,7 @@ class MenuCharacter extends FlxSprite
 		'senpai' => new CharacterSetting(-40, -45, 1.4),
 		'ron' => new CharacterSetting(-40, 25, 1.4),
 		'ronMain' => new CharacterSetting(0, -20, 1),
-		'ron2' => new CharacterSetting(-40, 25, 1.4),
-		'douyhe' => new CharacterSetting(-40, -20, 0.9),
-		'bambi' => new CharacterSetting(-40, -45, 1),
-		'cookron' => new CharacterSetting(-40, 45, 1.4)
+		'ron2' => new CharacterSetting(-40, 25, 1.4)
 	];
 
 	private var flipped:Bool = false;
@@ -68,9 +65,6 @@ class MenuCharacter extends FlxSprite
 		animation.addByPrefix('ron', "ron idle", 24);
 		animation.addByPrefix('ronMain', "ron idle", 24);
 		animation.addByPrefix('ron2', "ronweek2 idle", 24);
-		animation.addByPrefix('douyhe', "douyhe", 24);
-		animation.addByPrefix('bambi', "bambi", 24);
-		animation.addByPrefix('cookron', "cook ron", 24);
 
 		setGraphicSize(Std.int(width * scale));
 		updateHitbox();

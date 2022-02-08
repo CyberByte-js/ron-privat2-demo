@@ -502,22 +502,14 @@ class NormalPlayState extends MusicBeatState
 		var clr = 0xFFE51F89;
 		switch (curSelected)
 		{
-			case 1:
+			case 0:
 				clr = FlxColor.YELLOW;
-			case 2:
+			case 1:
 				clr = FlxColor.ORANGE;
-			case 3:
+			case 2:
 				clr = FlxColor.BROWN;
-			case 4:
+			case 3:
 				clr = FlxColor.BLACK;
-			case 5:
-				clr = 0xFF6E7896;
-			case 6:
-				clr = FlxColor.GREEN;
-			case 7:
-				clr = 0xFF202020;
-			case 8:
-				clr = FlxColor.MAGENTA;
 				
 		}
 		
