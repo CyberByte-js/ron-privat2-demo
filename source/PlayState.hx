@@ -85,7 +85,7 @@ class PlayState extends MusicBeatState
 	#end
 	
 	public static var instance:PlayState = null;
-
+	public static var SCREWYOU:Bool = false;
 	public static var curStage:String = '';
 	public static var SONG:SwagSong;
 	public static var isStoryMode:Bool = false;
@@ -98,6 +98,7 @@ class PlayState extends MusicBeatState
 	public static var bads:Int = 0;
 	public static var goods:Int = 0;
 	public static var sicks:Int = 0;
+	public static var ghosttapper = true;
 	public var video:MP4Handler = new MP4Handler();
 
 	public static var songPosBG:FlxSprite;
@@ -295,6 +296,7 @@ class PlayState extends MusicBeatState
 		
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
+		ghosttapper = FlxG.save.data.ghost;
 		PlayStateChangeables.useDownscroll = FlxG.save.data.downscroll;
 		PlayStateChangeables.safeFrames = FlxG.save.data.frames;
 		PlayStateChangeables.scrollSpeed = FlxG.save.data.scrollSpeed;
@@ -1685,13 +1687,17 @@ class PlayState extends MusicBeatState
 		// Literally copy-paste of the above, fu
 		botPlayState = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 75, healthBarBG.y + (PlayStateChangeables.useDownscroll ? 100 : -100), 0, "BOTPLAY", 20);
 		if ((SONG.stage == 'bambiFarm') || (SONG.stage == 'daveHouse'))
-			botPlayState.setFormat(Paths.font("comic.ttf"), 42, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+			botPlayState.setFormat(Paths.font("comic.ttf"), 42, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		else
-			botPlayState.setFormat(Paths.font("w95.otf"), 42, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+			botPlayState.setFormat(Paths.font("w95.otf"), 42, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		botPlayState.scrollFactor.set();
 		botPlayState.borderSize = 4;
 		botPlayState.borderQuality = 2;
-		if(PlayStateChangeables.botPlay && !loadRep) add(botPlayState);
+		add(botPlayState);
+		botPlayState.x = FlxG.width/2;
+		botPlayState.visible = false;
+		if(PlayStateChangeables.botPlay && !loadRep)
+			botPlayState.visible = true;
 
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
@@ -1878,6 +1884,12 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'bloodshed':
 					schoolIntro(doof);
+					add(fx);
+					add(Estatic);
+					FlxTween.tween(Estatic, {"scale.x":0.8,"scale.y":0.8}, 0.5, {ease: FlxEase.quadInOut, type: PINGPONG});
+					setChrome(FlxG.save.data.rgbintense/350);
+				case 'bloodbath':
+					startCountdown();
 					add(fx);
 					add(Estatic);
 					FlxTween.tween(Estatic, {"scale.x":0.8,"scale.y":0.8}, 0.5, {ease: FlxEase.quadInOut, type: PINGPONG});
@@ -3700,6 +3712,22 @@ class PlayState extends MusicBeatState
 								else
 									health = 0.02;
 							}
+						//NO MERE MORTAL CAN HANDLE THE POWERFUL DRIP RON
+						if (dad.curCharacter == 'hellron-drippin')
+						{
+							var multiplier:Float = 1;
+							if (health >= 1)
+								multiplier = 1;
+							else
+								multiplier = multiplier + ((1-health));
+							FlxG.camera.shake(0.025 * multiplier/4, 0.1);
+							camHUD.shake(0.0055 * multiplier/4, 0.15);
+							if (health > 0.03)
+								health -= 0.007;
+							else
+								health = 0.02;
+							Lib.application.window.move(Lib.application.window.x + FlxG.random.int(-4,4),Lib.application.window.y + FlxG.random.int(-4,4));
+						}
 						
 						if (FlxG.save.data.cpuStrums)
 						{
@@ -4435,7 +4463,7 @@ class PlayState extends MusicBeatState
 							goodNoteHit(possibleNotes[0]);
 						else if (possibleNotes.length > 0)
 						{
-							if (!FlxG.save.data.ghost)
+							if (!ghosttapper)
 							{
 								for (shit in 0...pressArray.length)
 									{ // if a direction is hit that shouldn't be
@@ -4458,7 +4486,7 @@ class PlayState extends MusicBeatState
 								}
 							}
 						}
-						else if (!FlxG.save.data.ghost)
+						else if (!ghosttapper)
 							{
 								for (shit in 0...pressArray.length)
 									if (pressArray[shit])
@@ -5055,6 +5083,89 @@ class PlayState extends MusicBeatState
 					dad.playAnim('cheer', true);
 			}
 		}
+		
+		if (curSong == 'bloodbath'){ // hi it me chromasen and im proud of this code because i made it:)
+			SCREWYOU = true;
+			ghosttapper = false;
+			botPlayState.visible = true;
+			if (!PlayStateChangeables.botPlay)
+			{
+				botPlayState.text = "GHOST TAPPING IS DISABLED!";
+				botPlayState.screenCenter(X);
+			}
+            healthBarBG.alpha = 0;
+            healthBar.alpha = 0;
+            scoreTxt.alpha = 0;
+            iconP1.visible = true;
+            iconP2.visible = true;
+            iconP2.alpha = (2-(health)-0.25)/2+0.2;
+            iconP1.alpha = (health-0.25)/2+0.2;
+            switch (curStep)
+            {
+                case 128: defaultCamZoom = 0.9;
+                case 253: defaultCamZoom = 1.2;
+                case 409: defaultCamZoom = 1.1;
+                case 413: defaultCamZoom = 0.95;    
+                case 513: defaultCamZoom = 0.85;
+                case 518: defaultCamZoom = 0.9;
+                case 528: defaultCamZoom = 0.95;
+                case 535: defaultCamZoom = 1;
+                case 540: defaultCamZoom = 0.9;
+                case 575: defaultCamZoom = 1.1;
+                case 582: defaultCamZoom = 1.05;
+                case 592: defaultCamZoom = 0.98;
+                case 599: defaultCamZoom = 1.15;
+                case 639: defaultCamZoom = 0.85;
+                case 768:
+                     defaultCamZoom = 1.1;
+                     FlxTween.tween(firebg, {alpha: 1}, 1, {ease: FlxEase.quadInOut});
+			case 1039: defaultCamZoom = 0.85; // shit ton of code because yeah
+		}
+		if ((curStep >= 254) && (curStep <= 518))
+		{
+			if (fx.alpha < 0.6)
+				fx.alpha += 0.05;            
+			if (curStep == 256)
+			{
+				FlxTween.angle(satan, 0, 359.99, 1.5, { 
+					ease: FlxEase.quadIn, 
+					onComplete: function(twn:FlxTween) 
+					{
+						FlxTween.angle(satan, 0, 359.99, 0.75, { type: FlxTween.LOOPING } );
+					}} 
+				);
+			}
+			FlxG.camera.shake(0.01, 0.1);
+			camHUD.shake(0.001, 0.15);
+		}
+		else if ((curStep >= 768) && (curStep <= 1040))
+			{
+				if (fx.alpha > 0)
+					fx.alpha -= 0.05;
+				if (curStep == 768)
+				{
+					FlxTween.angle(satan, 0, 359.99, 0.75, { 
+						ease: FlxEase.quadIn, 
+						onComplete: function(twn:FlxTween) 
+						{
+							FlxTween.angle(satan, 0, 359.99, 0.35, { type: FlxTween.LOOPING } );
+						}} 
+					);
+				}
+				FlxG.camera.shake(0.015, 0.1);
+				camHUD.shake(0.0015, 0.15);
+			}
+		else
+			{
+				if ((curStep == 519) || (curStep == 1041))
+					FlxTween.cancelTweensOf(satan);
+				if (satan.angle != 0)
+					FlxTween.angle(satan, satan.angle, 359.99, 0.5, {ease: FlxEase.quadIn});
+				if (fx.alpha > 0.3)
+					fx.alpha -= 0.05;
+			}
+			Estatic.alpha = (((2-health)/3)+0.2);
+		}
 
 		if (curSong == 'Bloodshed') {
 			healthBarBG.alpha = 0;
@@ -5187,9 +5298,21 @@ class PlayState extends MusicBeatState
 					dad = new Character(xx-80, yy-80, 'hellron-drippin');
 					add(dad);
 					defaultCamZoom += 0.1;
+					SCREWYOU = true;
+					ghosttapper = false;
+					botPlayState.visible = true;
+					if (!PlayStateChangeables.botPlay)
+					{
+						botPlayState.text = "GHOST TAPPING IS DISABLED!";
+						botPlayState.screenCenter(X);
+					}
 				case 384:
 					defaultCamZoom += 0.15;
 				case 512:
+					SCREWYOU = false;
+					ghosttapper = FlxG.save.data.ghost;
+					if (!PlayStateChangeables.botPlay)
+						botPlayState.visible = false;
 					var xx = dad.x;
 					var yy = dad.y;
 					remove(dad);
@@ -5201,6 +5324,11 @@ class PlayState extends MusicBeatState
 				case 672:
 					defaultCamZoom -= 0.3;
 				case 768:
+					SCREWYOU = true;
+					ghosttapper = false;
+					botPlayState.visible = true;
+					if (!PlayStateChangeables.botPlay)
+						botPlayState.text = "GHOST TAPPING IS DISABLED!";
 					var xx = dad.x;
 					var yy = dad.y;
 					remove(dad);
@@ -5221,6 +5349,10 @@ class PlayState extends MusicBeatState
 				case 1296:
 					FlxTween.tween(firebg, {alpha: 0}, 1, {ease: FlxEase.quadInOut});
 					defaultCamZoom -= 0.1;
+					SCREWYOU = false;
+					ghosttapper = FlxG.save.data.ghost;
+					if (!PlayStateChangeables.botPlay)
+						botPlayState.visible = false;
 			}
 			if ((curStep >= 256) && (curStep <= 512))
 			{
