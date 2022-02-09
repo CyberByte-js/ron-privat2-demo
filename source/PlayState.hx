@@ -1433,7 +1433,7 @@ class PlayState extends MusicBeatState
 				case 5: gfCheck = 'gf-christmas';
 				case 6: gfCheck = 'gf-pixel';
 			}
-			if (curSong == 'Bloodshed' || curSong == 'not-bloodshed')
+			if (curSong == 'Bloodshed')
 				gfCheck = 'gf-run';
 			if (curSong == 'Ayo')
 				gfCheck = 'gf-d';

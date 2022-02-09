@@ -8,7 +8,7 @@ function setDefault(id)
 end
 
 function start (song)
-
+    
 end
 
 function update (elapsed)
