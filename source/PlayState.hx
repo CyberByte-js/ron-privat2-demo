@@ -945,7 +945,7 @@ class PlayState extends MusicBeatState
 				ground.active = false;
 				add(ground);
 				fx = new FlxSprite().loadGraphic(Paths.image('updateron/bg/effect'));
-				fx.setGraphicSize(Std.int(2560 * 0.75));
+				fx.setGraphicSize(Std.int(2560 * 0.25));
 				fx.updateHitbox();
 				fx.antialiasing = true;
 				fx.screenCenter(XY);
@@ -1162,12 +1162,21 @@ class PlayState extends MusicBeatState
 				}
 			case 'void':
 				{
-					defaultCamZoom = 0.5;
-					curStage = 'baka';
-					var bg:FlxSprite = new FlxSprite(300, 200).loadGraphic(Paths.image('updateron/bg/effect'));
-					bg.antialiasing = true;
-					bg.active = false;
-					add(bg);
+					defaultCamZoom = 1.6;
+					curStage = 'void';
+					fx = new FlxSprite().loadGraphic(Paths.image('updateron/bg/effect'));
+					fx.setGraphicSize(Std.int(2560 * 0.33));
+					fx.updateHitbox();
+					fx.antialiasing = true;
+					fx.screenCenter(XY);
+					fx.scrollFactor.set(0, 0);
+					fx.alpha = 1;	
+					blackeffect = new FlxSprite().makeGraphic(FlxG.width*3, FlxG.height*3, FlxColor.BLACK);
+					blackeffect.updateHitbox();
+					blackeffect.antialiasing = true;
+					blackeffect.screenCenter(XY);
+					blackeffect.scrollFactor.set();
+					blackeffect.alpha = 0.5;
 				}
 				case 'glitch-factory':
 					defaultCamZoom = 0.7;
@@ -1742,6 +1751,12 @@ class PlayState extends MusicBeatState
 				dad.x += 70;
 				dad.y += 250;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
+			case 'hacker':
+				gf.visible = false;
+				dad.x -= 900;
+				dad.y += 125;
+				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
+				healthBar.createFilledBar(0xFF000000, bfcolor);
 			case 'ronDave':
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
 			case 'ronPower':
@@ -1904,6 +1919,10 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'holy-shit-dave-fnf':
 					schoolIntro2(doof2, false);
+				case 'oh-god-oh-fuck':
+					add(fx);
+					add(blackeffect);
+					startCountdown();
 				default:
 					startCountdown();
 			}
@@ -2465,6 +2484,8 @@ class PlayState extends MusicBeatState
 							skin = 'NOTE_assets';
 						case 'hellron':
 							skin = 'ronhell';
+						case 'hacker':
+							skin = 'ronhell';
 						case 'ateloron':
 							skin = 'ronhell';
 						case 'ron-usb':
@@ -2607,6 +2628,8 @@ class PlayState extends MusicBeatState
 						{
 							case 'douyhe':
 								skin = 'NOTE_assets';
+							case 'hacker':
+								skin = 'ronhell';
 							case 'hellron':
 								skin = 'ronhell';
 							case 'devilron':
@@ -3182,7 +3205,6 @@ class PlayState extends MusicBeatState
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
 
-		#if debug
 		if (FlxG.keys.justPressed.SIX)
 		{
 			if (useVideo)
@@ -3217,8 +3239,6 @@ class PlayState extends MusicBeatState
 			}
 			#end
 		}
-
-		#end
 
 		if (startingSong)
 		{
@@ -3417,6 +3437,9 @@ class PlayState extends MusicBeatState
 
 				if (dad.curCharacter == 'mom')
 					vocals.volume = 1;
+					
+				if (dad.curCharacter == 'hacker')
+					defaultCamZoom = 0.6;
 			}
 
 			if (PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection && camFollow.x != boyfriend.getMidpoint().x - 100)
@@ -3453,6 +3476,8 @@ class PlayState extends MusicBeatState
 						camFollow.x = boyfriend.getMidpoint().x - 200;
 						camFollow.y = boyfriend.getMidpoint().y - 200;
 				}
+				if (dad.curCharacter == 'hacker')
+					defaultCamZoom = 1.6;
 			}
 		}
 
@@ -5165,6 +5190,15 @@ class PlayState extends MusicBeatState
 					fx.alpha -= 0.05;
 			}
 			Estatic.alpha = (((2-health)/3)+0.2);
+		}
+		
+		if (curSong == 'Fair-And-Square') {
+			healthBarBG.alpha = 0;
+			healthBar.alpha = 0;
+			iconP1.visible = true;
+			iconP2.visible = true;
+			iconP2.alpha = (2-(health)-0.25)/2+0.2;
+			iconP1.alpha = (health-0.25)/2+0.2;
 		}
 
 		if (curSong == 'Bloodshed') {

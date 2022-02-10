@@ -348,6 +348,19 @@ class Character extends FlxSprite
 				addOffset("singLEFT",180,0);
 				addOffset("singRIGHT",30,-7);
 				addOffset("singDOWN",60,-61);
+			case 'hacker':
+				tex = Paths.getSparrowAtlas('updateron/characters/hacker');
+				frames = tex;
+				animation.addByPrefix('idle', "idle normal", 24);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('singLEFT', 'right', 24, false);
+				animation.addByPrefix('singRIGHT', 'left', 24, false);
+				addOffset('idle',-200,-150);
+				addOffset("singUP",25,175);
+				addOffset("singLEFT",-185,-141);
+				addOffset("singRIGHT",1050,245);
+				addOffset("singDOWN",370,200);
 			case 'hellron-drippin':
 				tex = Paths.getSparrowAtlas('updateron/characters/hellron-drippin');
 				frames = tex;
