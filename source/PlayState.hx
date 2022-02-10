@@ -5225,6 +5225,9 @@ class PlayState extends MusicBeatState
 					defaultCamZoom = 1.15;
 				case 1016:
 					defaultCamZoom = 1.25;
+				case 1150:
+					camHUD.angle = 0;
+					camHUD.alpha = 1;
 			}
 			if ((curStep >= 259) && (curStep <= 518))
 			{

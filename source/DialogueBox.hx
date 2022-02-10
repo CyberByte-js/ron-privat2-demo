@@ -72,7 +72,7 @@ class DialogueBox extends FlxSpriteGroup
 		var hasDialog = false;
 		switch (PlayState.SONG.song.toLowerCase())
 		{
-			case 'ron' | 'ayo' | 'wasted' | 'bloodshed' | 'trojan-virus' | 'file-manipulation' | 'atelophobia' | 'factory-reset' | 'bloodshed-old' | 'pretty-wacky' | 'bloodshed-b' | 'bleeding':
+			case 'ron' | 'ayo' | 'wasted' | 'trojan-virus' | 'file-manipulation' | 'atelophobia' | 'factory-reset' | 'bloodshed-old' | 'pretty-wacky' | 'bloodshed-b':
 				hasDialog = true;
 				box.frames = Paths.getSparrowAtlas('speech_bubble_talking', 'shared');
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
@@ -82,7 +82,16 @@ class DialogueBox extends FlxSpriteGroup
 				box.height = 200;
 				box.x = -100;
 				box.y = 375;
-
+			case 'bloodshed' | 'bleeding':
+				hasDialog = true;
+				box.frames = Paths.getSparrowAtlas('speech_bubble_talking_invert', 'shared');
+				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
+				box.animation.addByPrefix('normal', 'speech bubble normal', 24, false);
+				box.animation.addByPrefix('exaggerate', 'AHH speech bubble', 24, false);
+				box.width = 200;
+				box.height = 200;
+				box.x = -100;
+				box.y = 375;
 		}
 
 		this.dialogueList = dialogueList;
@@ -128,7 +137,10 @@ class DialogueBox extends FlxSpriteGroup
 
 		box.screenCenter(X);
 
-		handSelect = new FlxSprite(FlxG.width * 0.7, FlxG.height * 0.85).loadGraphic(Paths.image('hand'));
+		if ((PlayState.SONG.song.toLowerCase() == 'bloodshed') || (PlayState.SONG.song.toLowerCase() == 'bleeding'))
+			handSelect = new FlxSprite(FlxG.width * 0.7, FlxG.height * 0.85).loadGraphic(Paths.image('handBlood'));
+		else
+			handSelect = new FlxSprite(FlxG.width * 0.7, FlxG.height * 0.85).loadGraphic(Paths.image('hand'));
 		add(handSelect);
 		FlxTween.tween(handSelect, {x: FlxG.width * 0.72}, 0.5, {ease: FlxEase.quadInOut, type: PINGPONG});
 
@@ -302,6 +314,11 @@ class DialogueBox extends FlxSpriteGroup
 			dropText.color = 0xFFFFF4BB;
 			swagDialogue.font = Paths.font("w95.otf");
 			swagDialogue.color = 0xFFFFBF00;
+			if ((PlayState.SONG.song.toLowerCase() == 'bloodshed') || (PlayState.SONG.song.toLowerCase() == 'bleeding'))
+			{
+				swagDialogue.color = 0xFFFFF4BB;
+				dropText.color = 0xFF1A1A1A;
+			}
 			dropText.size = 48;
 			swagDialogue.size = 48;
 			box.flipX = true;
@@ -320,6 +337,8 @@ class DialogueBox extends FlxSpriteGroup
 			dropText.size = 32;
 			swagDialogue.size = 32;
 			box.flipX = false;
+			if ((PlayState.SONG.song.toLowerCase() == 'bloodshed') || (PlayState.SONG.song.toLowerCase() == 'bleeding'))
+				dropText.color = 0xFF1A1A1A;
 			new FlxTimer().start(0.04, function(tmr:FlxTimer)
 			{
 				portraitRight.animation.play(curCharacter);
