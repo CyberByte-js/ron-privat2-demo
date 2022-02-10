@@ -25,7 +25,12 @@ function update (elapsed)
     if daNoteMove then
         for i=4,7 do
             setActorX(_G['defaultStrum'..i..'X'] + 8 * math.sin((currentBeat + i*0.25) * math.pi), i)
-            setActorY(defaultStrum0Y + 18 * math.cos((currentBeat + i*2.5) * math.pi), i)
+
+            if downscroll then
+                setActorY(defaultStrum0Y - 18 * math.cos((currentBeat + i*2.5) * math.pi), i)
+            else
+                setActorY(defaultStrum0Y + 18 * math.cos((currentBeat + i*2.5) * math.pi), i)
+            end
         end
     end
 	if daNoteMoveH then
@@ -41,14 +46,22 @@ function update (elapsed)
 	end
 	if daNoteMoveH3 then
         for i=4,7 do
-			setActorY(defaultStrum0Y + 128 * math.cos((currentBeat/4) * math.pi) + 128, i)
+            if downscroll then
+                setActorY(defaultStrum0Y - 128 * math.cos((currentBeat/4) * math.pi) + 128, i)
+            else
+			    setActorY(defaultStrum0Y + 128 * math.cos((currentBeat/4) * math.pi) + 128, i)
+            end
             setActorX(_G['defaultStrum'..i..'X'] + 128 * math.sin((currentBeat) * math.pi), i)
         end
 	end
 	if daNoteMoveH4 then
         for i=4,7 do
             setActorX(_G['defaultStrum'..i..'X'] + 128 * math.sin((currentBeat) * math.pi), i)
-			setActorY(strumy + 24 * math.cos((currentBeat) * math.pi), i)
+            if downscroll then
+                setActorY(strumy - 24 * math.cos((currentBeat) * math.pi), i) 
+            else
+                setActorY(strumy + 24 * math.cos((currentBeat) * math.pi), i)   
+            end
 		end
 		camHudAngle = 10 * math.sin((currentBeat/6) * math.pi)
 		cameraAngle = 2 * math.sin((currentBeat/6) * math.pi)
@@ -56,6 +69,11 @@ function update (elapsed)
 	if daNoteMoveH5 then
         for i=4,7 do
             setActorX(_G['defaultStrum'..i..'X'] + 128 * math.sin((currentBeat) * math.pi), i)
+            if downscroll then
+                setActorY(defaultStrum0Y - 96 * math.cos((currentBeat/4) * math.pi) + 96, i)
+            else
+                setActorY(defaultStrum0Y + 96 * math.cos((currentBeat/4) * math.pi) + 96, i)
+            end
 			setActorY(defaultStrum0Y + 96 * math.cos((currentBeat/4) * math.pi) + 96, i)
 		end
 		camHudAngle = 25 * math.sin((currentBeat/5) * math.pi)
