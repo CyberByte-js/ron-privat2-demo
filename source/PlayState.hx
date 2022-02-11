@@ -225,6 +225,17 @@ class PlayState extends MusicBeatState
 	var replayTxt:FlxText;
 	var loadingScreen:FlxSprite;
 
+	var funnywindow:Bool = false;
+	var funnywindowsmall:Bool = false;
+	var NOMOREFUNNY:Bool = false;
+	var strumy:Int = 50;
+	var windowmove:Bool = false;
+	var cameramove:Bool = false;
+
+	var defaultStrumX:Array<Float> = [50,162,274,386,690,802,914,1026];
+	var defaultStrumY:Float = 50;
+	var defaultStrumA:Array<Float> = [0,0,0,0,0,0,0,0];
+
 	public static var campaignScore:Int = 0;
 
 	var defaultCamZoom:Float = 1.05;
@@ -1562,7 +1573,14 @@ class PlayState extends MusicBeatState
 		strumLine.scrollFactor.set();
 		
 		if (PlayStateChangeables.useDownscroll)
-			strumLine.y = FlxG.height - 165;
+			strumLine.y  = FlxG.height - 165;
+		else
+			strumLine.y  = 50;
+
+		if(FlxG.save.data.downscroll)
+			defaultStrumY = FlxG.height - 165;
+		else
+			defaultStrumY = 50;
 
 		strumLineNotes = new FlxTypedGroup<FlxSprite>();
 		add(strumLineNotes);
@@ -1963,6 +1981,11 @@ class PlayState extends MusicBeatState
 				lol.cameras = [camHUD];
 			});
 		});
+	}
+
+	function setWindowPos(x:Int,y:Int) {
+		Application.current.window.x = x;
+		Application.current.window.y = y;
 	}
 
 	function schoolIntro(?dialogueBox:DialogueBox):Void
@@ -3079,6 +3102,81 @@ class PlayState extends MusicBeatState
 		}
 
 		#end
+
+		var currentBeat:Float = (Conductor.songPosition / 1000)*(Conductor.bpm/60);
+
+		switch(SONG.song.toLowerCase()){
+			case 'bloodshed': 
+				if(funnywindow ){
+					setWindowPos(Std.int(127 * Math.sin(currentBeat * Math.PI) + 327), Std.int(127 * Math.sin(currentBeat * 3) + 160));
+				}
+				if(funnywindowsmall ){
+					setWindowPos(Std.int(24 * Math.sin(currentBeat * Math.PI) + 327), Std.int(24 * Math.sin(currentBeat * 3) + 160));
+				}
+				if(NOMOREFUNNY ){
+					setWindowPos(Std.int(0 * Math.sin(currentBeat * Math.PI) + 327), Std.int(0 * Math.sin(currentBeat * 3) + 160));
+				}
+				if(daNoteMove ){
+				   for (i in 4...8) {
+						var member = PlayState.strumLineNotes.members[i];
+
+						member.x  = defaultStrumX[i]+ 8* Math.sin((currentBeat + i*0.25) * Math.PI);
+
+						if(FlxG.save.data.downscroll)
+							member.y  = defaultStrumY -  18 *  Math.cos((currentBeat + i*2.5) * Math.PI);
+						else 
+							member.y  = defaultStrumY +  18 *  Math.cos((currentBeat + i*2.5) * Math.PI);
+						
+					}
+				}
+				if(daNoteMoveH ){
+				   for (i in 4...8) { 
+						var member = PlayState.strumLineNotes.members[i];
+						member.x  = defaultStrumX[i] + 32 * Math.sin((currentBeat + i*0.25) * Math.PI);	
+					
+					}
+				}
+			
+				if(daNoteMoveH3 ){
+				   for (i in 4...8) { 
+						var member = PlayState.strumLineNotes.members[i];
+						if(FlxG.save.data.downscroll)
+							member.y =  defaultStrumY - 128 * Math.cos((currentBeat/4) * Math.PI) - 128;	
+						else 
+							member.y =  defaultStrumY + 128 * Math.cos((currentBeat/4) * Math.PI) + 128;	
+
+						member.x =  defaultStrumX[i]  + 128 * Math.sin((currentBeat) * Math.PI);
+
+					
+					}
+				}
+				if(daNoteMoveH4 ){
+				   for (i in 4...8) { 
+						var member = PlayState.strumLineNotes.members[i];
+						member.x  = defaultStrumX[i] + 128 * Math.sin((currentBeat) * Math.PI);	
+
+						if(FlxG.save.data.downscroll)
+							member.y  = defaultStrumY - 24 * Math.cos((currentBeat) * Math.PI);
+						else
+							member.y  = defaultStrumY + 24 * Math.cos((currentBeat) * Math.PI);
+					}
+					camHUD.angle = 10 * Math.sin((currentBeat/6) * Math.PI);
+					FlxG.camera.angle = 2 * Math.sin((currentBeat/6) * Math.PI);
+				}
+				if(daNoteMoveH5 ){
+				   for (i in 4...8) { 
+						var member = PlayState.strumLineNotes.members[i];
+						member.x  = defaultStrumX[i] + 128 * Math.sin((currentBeat) * Math.PI);	
+						
+						if(FlxG.save.data.downscroll)
+							member.y  = defaultStrumY - 96 * Math.cos((currentBeat/4) * Math.PI) - 96;
+						else 
+							member.y  = defaultStrumY + 96 * Math.cos((currentBeat/4) * Math.PI) + 96;
+					}
+					camHUD.angle = 25 * Math.sin((currentBeat/5) * Math.PI);
+					FlxG.camera.angle = 5 * Math.sin((currentBeat/5) * Math.PI);
+				}
+		}
 
 		// reverse iterate to remove oldest notes first and not invalidate the iteration
 		// stop iteration as soon as a note is not removed
@@ -5775,6 +5873,54 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
+		switch(SONG.song.toLowerCase()){
+				case 'bloodshed': 
+					if(curStep == 129 ){
+						funnywindowsmall = true;
+						for (i in 0...4) { 
+							var member = PlayState.strumLineNotes.members[i];
+							FlxTween.tween(PlayState.strumLineNotes.members[i], { x: defaultStrumX[i]+ 1250 ,angle: 360}, 1);
+							defaultStrumX[i] += 1250;
+						}
+						for (i in 4...8) { 
+							var member = PlayState.strumLineNotes.members[i];
+							FlxTween.tween(PlayState.strumLineNotes.members[i], { x: defaultStrumX[i] - 275,angle: 360}, 1);
+							defaultStrumX[i] -= 275;
+						}
+					}
+					if((curStep == 258) ){
+						daNoteMoveH2 = true;
+						funnywindowsmall = false;
+						funnywindow = true;
+					}
+					if(curStep == 389 ){
+						daNoteMoveH2 = false;
+						daNoteMoveH3 = true;
+					}
+					if(curStep == 518 ){
+						daNoteMoveH3 = false;
+						daNoteMoveH4 = true;
+						funnywindow = false;
+						funnywindowsmall = true;
+					}
+					if(curStep == 776 ){
+						funnywindowsmall = false;
+						funnywindow = true;
+						daNoteMoveH4 = false;
+						daNoteMoveH5 = true;
+					}
+					if(curStep >= 1053 ){
+						NOMOREFUNNY = true;
+						funnywindow = false;
+						funnywindowsmall = false;
+						if(PlayState.instance.camHUD.alpha > 0 ){
+							PlayState.instance.camHUD.alpha  -= 0.05;
+						}
+					}
+
+					
+		}
+
 		// yes this updates every step.
 		// yes this is bad
 		// but i'm doing it to update misses and accuracy
@@ -5787,6 +5933,13 @@ class PlayState extends MusicBeatState
 		#end
 
 	}
+
+	var daNoteMove:Bool =false;
+	var daNoteMoveH:Bool =false;
+	var daNoteMoveH2:Bool =false;
+	var daNoteMoveH3:Bool =false;
+	var daNoteMoveH4:Bool =false;
+	var daNoteMoveH5:Bool =false;
 
 	var lightningStrikeBeat:Int = 0;
 	var lightningOffset:Int = 8;
