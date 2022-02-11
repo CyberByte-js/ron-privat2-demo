@@ -74,7 +74,6 @@ function update (elapsed)
             else
                 setActorY(defaultStrum0Y + 96 * math.cos((currentBeat/4) * math.pi) + 96, i)
             end
-			setActorY(defaultStrum0Y + 96 * math.cos((currentBeat/4) * math.pi) + 96, i)
 		end
 		camHudAngle = 25 * math.sin((currentBeat/5) * math.pi)
 		cameraAngle = 5 * math.sin((currentBeat/5) * math.pi)
