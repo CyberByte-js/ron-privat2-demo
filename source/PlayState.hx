@@ -44,6 +44,7 @@ import flixel.addons.effects.FlxTrailArea;
 import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.addons.effects.chainable.FlxWaveEffect;
 import flixel.addons.transition.FlxTransitionableState;
+import flixel.addons.display.FlxBackdrop;
 import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -208,10 +209,12 @@ class PlayState extends MusicBeatState
 	var wastedbg:FlxSprite;
 	var cloudsa:FlxSprite;
 	var witheredRa:FlxSprite;
+	var witheredClouds:FlxBackdrop;
 	var bgLol:FlxSprite;
 
 	var fc:Bool = true;
 	var fx:FlxSprite;
+	var fxtwo:FlxSprite;
 	var blackeffect:FlxSprite;
 	var ronAnimation:FlxSprite;
 
@@ -984,278 +987,7 @@ class PlayState extends MusicBeatState
 				Estatic2.screenCenter();
 				Estatic2.alpha = 0;
 			}
-			case 'glitch':
-				defaultCamZoom = 0.7;
-				curStage = 'glitch';
-				var bg:FlxSprite = new FlxSprite();
-				bg.frames = Paths.getSparrowAtlas('updateron/bg/atelo_bg');
-				bg.scale.set(2,2);
-				bg.animation.addByPrefix('idle', 'bg instance 1', 24, true);
-				bg.animation.play('idle');
-				bg.scrollFactor.set(0.05, 0.05);
-				bg.screenCenter();
-				add(bg);
-				var popup:FlxSprite = new FlxSprite();
-				popup.frames = Paths.getSparrowAtlas('updateron/bg/atelo_popup_animated');
-				popup.scale.set(4,4);
-				popup.animation.addByPrefix('idle', 'popups instance 1', 24, true);
-				popup.animation.play('idle');
-				popup.scrollFactor.set(0.05, 0.05);
-				popup.screenCenter();
-				add(popup);
-				var lamp:FlxSprite = new FlxSprite(900, 100);
-				lamp.frames = Paths.getSparrowAtlas('updateron/bg/atelo_lamp');
-				lamp.scale.set(2,2);
-				lamp.animation.addByPrefix('idle', 'lamppost instance 1', 24, true);
-				lamp.animation.play('idle');
-				lamp.scrollFactor.set(0.9, 0.9);
-				add(lamp);
-				var ground:FlxSprite = new FlxSprite().loadGraphic(Paths.image('updateron/bg/atelo_ground'));
-				ground.scale.set(2,2);
-				ground.screenCenter(X);
-				ground.antialiasing = true;
-				ground.scrollFactor.set(0.9, 0.9);
-				ground.active = false;
-				add(ground);
-				var error:FlxSprite = new FlxSprite(900, 550);
-				error.frames = Paths.getSparrowAtlas('updateron/bg/error');
-				error.scale.set(2,2);
-				error.animation.addByPrefix('idle', 'error instance 1', 24, true);
-				error.animation.play('idle');
-				error.updateHitbox();
-				error.antialiasing = true;
-				add(error);
-				var error2:FlxSprite = new FlxSprite(-650, 550);
-				error2.frames = Paths.getSparrowAtlas('updateron/bg/error');
-				error2.scale.set(2,2);
-				error2.animation.addByPrefix('idle', 'error instance 1', 24, true);
-				error2.animation.play('idle');
-				error2.updateHitbox();
-				error2.antialiasing = true;
-				add(error2);
-			case 'baka':
-				{
-					defaultCamZoom = 0.9;
-					curStage = 'baka';
-					var bg:FlxSprite = new FlxSprite(300, 200).loadGraphic(Paths.image('ron/bg/unknown'));
-					bg.setGraphicSize(Std.int(bg.width * 4));
-					bg.setGraphicSize(Std.int(bg.height * 4));
-					bg.antialiasing = true;
-					bg.scrollFactor.set(0.9, 0.9);
-					bg.active = false;
-					add(bg);
-				}
-			case 'win':
-				{
-					defaultCamZoom = 0.8;
-					curStage = 'win';
-					
-					#if PRELOAD_ALL			
-						var images = [];
-						var xml = [];
-						trace("caching images...");
-			
-						for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images/updateron/cachecharacters/")))
-						{
-							if (!i.endsWith(".png"))
-								continue;
-							images.push(i);
-			
-							if (!i.endsWith(".xml"))
-								continue;
-							xml.push(i);
-						}
-						for (i in images)
-						{
-							var replaced = i.replace(".png","");
-							FlxG.bitmap.add(Paths.image("updateron/cachecharacters/" + replaced,"shared"));
-							trace("cached " + replaced);
-						}
-					
-					for (i in xml)
-						{
-							var replaced = i.replace(".xml","");
-							FlxG.bitmap.add(Paths.image("updateron/cachecharacters/" + replaced,"shared"));
-							trace("cached " + replaced);
-						}
-					#end
-					var bg:FlxSprite = new FlxSprite();
-					bg.frames = Paths.getSparrowAtlas('updateron/bg/trojan_bg');
-					bg.scale.set(4,4);
-					bg.animation.addByPrefix('idle', 'bg instance 1', 24, true);
-					bg.animation.play('idle');
-					bg.scrollFactor.set(0.05, 0.05);
-					bg.screenCenter();
-					add(bg);
-					Estatic2 = new FlxSprite().loadGraphic(Paths.image('updateron/bg/deadly'));
-					Estatic2.scrollFactor.set();
-					Estatic2.screenCenter();
-					Estatic2.alpha = 0;
-					var console:FlxSprite = new FlxSprite();
-					console.frames = Paths.getSparrowAtlas('updateron/bg/trojan_console');
-					console.scale.set(4,4);
-					console.animation.addByPrefix('idle', 'ezgif.com-gif-maker (7)_gif instance 1', 24, true);
-					console.animation.play('idle');
-					console.scrollFactor.set(0.05, 0.05);
-					console.screenCenter();
-					console.alpha = 0.3;
-					add(console);
-					var popup:FlxSprite = new FlxSprite();
-					popup.frames = Paths.getSparrowAtlas('updateron/bg/atelo_popup_animated');
-					popup.scale.set(4,4);
-					popup.animation.addByPrefix('idle', 'popups instance 1', 24, true);
-					popup.animation.play('idle');
-					popup.scrollFactor.set(0.05, 0.05);
-					popup.screenCenter();
-					add(popup);
-					var lamp:FlxSprite = new FlxSprite(900, 100);
-					lamp.frames = Paths.getSparrowAtlas('updateron/bg/glitch_lamp');
-					lamp.scale.set(2,2);
-					lamp.animation.addByPrefix('idle', 'lamppost', 24, true);
-					lamp.animation.play('idle');
-					lamp.scrollFactor.set(0.9, 0.9);
-					add(lamp);
-					var ground:FlxSprite = new FlxSprite(-537, -290).loadGraphic(Paths.image('updateron/bg/trojan_ground'));
-					ground.updateHitbox();
-					ground.active = false;
-					ground.antialiasing = true;
-					add(ground);
-					var error:FlxSprite = new FlxSprite(900, 550);
-					error.frames = Paths.getSparrowAtlas('updateron/bg/error');
-					error.scale.set(2,2);
-					error.animation.addByPrefix('idle', 'error instance 1', 24, true);
-					error.animation.play('idle');
-					error.updateHitbox();
-					error.antialiasing = true;
-					add(error);
-					Estatic = new FlxSprite();
-					Estatic.frames = Paths.getSparrowAtlas('updateron/bg/trojan_static');
-					Estatic.scale.set(4,4);
-					Estatic.animation.addByPrefix('idle', 'static instance 1', 24, true);
-					Estatic.animation.play('idle');
-					Estatic.scrollFactor.set();
-					Estatic.screenCenter();
-					ronAnimation = new FlxSprite();
-					ronAnimation.frames = Paths.getSparrowAtlas('updateron/characters/ateloron-Transform');
-					ronAnimation.animation.addByPrefix('idle', 'transformation instance 1', 24);
-					ronAnimation.animation.play('idle');
-					ronAnimation.visible = false;
-					add(Estatic2);
-				}
-			case 'trouble' :
-				{
-					defaultCamZoom = 0.9;
-					curStage = 'trouble';
-					var bg:FlxSprite = new FlxSprite(-100,10).loadGraphic(Paths.image('updateron/bg/nothappy_sky'));
-					bg.updateHitbox();
-					bg.scale.x = 1.2;
-					bg.scale.y = 1.2;
-					bg.active = false;
-					bg.antialiasing = true;
-					bg.scrollFactor.set(0.1, 0.1);
-					add(bg);
-					/*var glitchEffect = new FlxGlitchEffect(8,10,0.4,FlxGlitchDirection.HORIZONTAL);
-					var glitchSprite = new FlxEffectSprite(bg, [glitchEffect]);
-					add(glitchSprite);*/
-					
-					var ground:FlxSprite = new FlxSprite(-537, -250).loadGraphic(Paths.image('updateron/bg/nothappy_ground'));
-					ground.updateHitbox();
-					ground.active = false;
-					ground.antialiasing = true;
-					add(ground);
 
-					var deadbob:FlxSprite = new FlxSprite(-700, 600).loadGraphic(Paths.image('updateron/bg/GoodHeDied'));
-					deadbob.updateHitbox();
-					deadbob.active = false;
-					deadbob.antialiasing = true;
-					add(deadbob);
-					
-				}
-			case 'void':
-				{
-					defaultCamZoom = 1.6;
-					curStage = 'void';
-					fx = new FlxSprite().loadGraphic(Paths.image('updateron/bg/effect'));
-					fx.setGraphicSize(Std.int(2560 * 0.33));
-					fx.updateHitbox();
-					fx.antialiasing = true;
-					fx.screenCenter(XY);
-					fx.scrollFactor.set(0, 0);
-					fx.alpha = 1;	
-					blackeffect = new FlxSprite().makeGraphic(FlxG.width*3, FlxG.height*3, FlxColor.BLACK);
-					blackeffect.updateHitbox();
-					blackeffect.antialiasing = true;
-					blackeffect.screenCenter(XY);
-					blackeffect.scrollFactor.set();
-					blackeffect.alpha = 0.5;
-				}
-				case 'glitch-factory':
-					defaultCamZoom = 0.7;
-					curStage = 'glitch-factory';
-					var bg:FlxSprite = new FlxSprite();
-					bg.frames = Paths.getSparrowAtlas('updateron/bg/atelo_bg');
-					bg.scale.set(2, 2);
-					bg.animation.addByPrefix('idle', 'bg instance 1', 24, true);
-					bg.animation.play('idle');
-					bg.scrollFactor.set(0.05, 0.05);
-					bg.screenCenter();
-					add(bg);
-					var popup:FlxSprite = new FlxSprite();
-					popup.frames = Paths.getSparrowAtlas('updateron/bg/atelo_popup_animated');
-					popup.scale.set(4, 4);
-					popup.animation.addByPrefix('idle', 'popups instance 1', 24, true);
-					popup.animation.play('idle');
-					popup.scrollFactor.set(0.05, 0.05);
-					popup.screenCenter();
-					add(popup);
-					var lamp:FlxSprite = new FlxSprite(900, 100);
-					lamp.frames = Paths.getSparrowAtlas('updateron/bg/atelo_lamp');
-					lamp.scale.set(2, 2);
-					lamp.animation.addByPrefix('idle', 'lamppost instance 1', 24, true);
-					lamp.animation.play('idle');
-					lamp.scrollFactor.set(0.9, 0.9);
-					add(lamp);
-					var ground:FlxSprite = new FlxSprite().loadGraphic(Paths.image('updateron/bg/atelo_ground'));
-					ground.scale.set(2, 2);
-					ground.screenCenter(X);
-					ground.antialiasing = true;
-					ground.scrollFactor.set(0.9, 0.9);
-					ground.active = false;
-					add(ground);
-					var error:FlxSprite = new FlxSprite(900, 550);
-					error.frames = Paths.getSparrowAtlas('updateron/bg/error');
-					error.scale.set(2, 2);
-					error.animation.addByPrefix('idle', 'error instance 1', 24, true);
-					error.animation.play('idle');
-					error.updateHitbox();
-					error.antialiasing = true;
-					add(error);
-					var error2:FlxSprite = new FlxSprite(-650, 550);
-					error2.frames = Paths.getSparrowAtlas('updateron/bg/error');
-					error2.scale.set(2, 2);
-					error2.animation.addByPrefix('idle', 'error instance 1', 24, true);
-					error2.animation.play('idle');
-					error2.updateHitbox();
-					error2.antialiasing = true;
-					add(error2);
-
-					// Morshu
-					var morshu:FlxSprite = new FlxSprite(-650, 0);
-					morshu.frames = Paths.getSparrowAtlas('updateron/bg/mmm');
-					morshu.animation.addByPrefix('idle', 'bop', 24, true);
-					morshu.animation.play('idle');
-					morshu.updateHitbox();
-					morshu.antialiasing = true;
-					add(morshu);
-
-					// Caleb
-					var caleb:FlxSprite = new FlxSprite(900, 0);
-					caleb.frames = Paths.getSparrowAtlas('updateron/bg/ears');
-					caleb.animation.addByPrefix('idle', 'bop', 24, true);
-					caleb.animation.play('idle');
-					caleb.updateHitbox();
-					caleb.antialiasing = true;
-					add(caleb);
 			case 'daveHouse':
 			{
 				defaultCamZoom = 0.9;
@@ -1293,133 +1025,57 @@ class PlayState extends MusicBeatState
 				
 				add(stageFront);
 			}
-			case 'bambiFarm':
+			case 'withered':
 			{
-				defaultCamZoom = 0.9;
-	
-				var bg:FlxSprite = new FlxSprite(-700, 0).loadGraphic(Paths.image('updateron/bg/sky'));
-				bg.antialiasing = true;
-				bg.scrollFactor.set(0.9, 0.9);
-				bg.active = false;
-	
-				var hills:FlxSprite = new FlxSprite(-250, 200).loadGraphic(Paths.image('updateron/bg/orangey hills'));
-				hills.antialiasing = true;
-				hills.scrollFactor.set(0.9, 0.7);
-				hills.active = false;
-	
-				var farm:FlxSprite = new FlxSprite(150, 250).loadGraphic(Paths.image('updateron/bg/funfarmhouse'));
-				farm.antialiasing = true;
-				farm.scrollFactor.set(1.1, 0.9);
-				farm.active = false;
-				
-				var foreground:FlxSprite = new FlxSprite(-400, 600).loadGraphic(Paths.image('updateron/bg/grass lands'));
-				foreground.antialiasing = true;
-				foreground.active = false;
-
-				var cornSet:FlxSprite = new FlxSprite(-350, 325).loadGraphic(Paths.image('updateron/bg/Cornys'));
-				cornSet.antialiasing = true;
-				cornSet.active = false;
-				
-				var cornSet2:FlxSprite = new FlxSprite(1050, 325).loadGraphic(Paths.image('updateron/bg/Cornys'));
-				cornSet2.antialiasing = true;
-				cornSet2.active = false;
-				
-				var fence:FlxSprite = new FlxSprite(-350, 450).loadGraphic(Paths.image('updateron/bg/crazy fences'));
-				fence.antialiasing = true;
-				fence.active = false;
-	
-				var sign:FlxSprite = new FlxSprite(0, 500).loadGraphic(Paths.image('updateron/bg/Sign'));
-				sign.antialiasing = true;
-				sign.active = false;
-
+				defaultCamZoom = 0.75;
+				curStage = 'withered';
+				var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('updateron/bg/bobtwerked/annoyed_sky'));
+				bg.setGraphicSize(Std.int(bg.width * 0.75));
+				bg.scrollFactor.set(0.2,0.2);
+				bg.updateHitbox();
+				bg.screenCenter(XY);
 				add(bg);
-				add(hills);
-				add(farm);
-				add(foreground);
-				add(cornSet);
-				add(cornSet2);
-				add(fence);
-				add(sign);
-			}
-			case 'oldmad':
-			{
-				defaultCamZoom = 0.9;
-				curStage = 'oldmad';
-				var bg:FlxSprite = new FlxSprite(300, 200).loadGraphic(Paths.image('ron/bg/ron2background_edited'));
-				bg.setGraphicSize(Std.int(bg.width *5));
-				bg.setGraphicSize(Std.int(bg.height * 5));
-				bg.antialiasing = true;
-				bg.scrollFactor.set(0.9, 0.9);
-				bg.active = false;
-				add(bg);
-			}
-			case 'oldhell':
-			{
-				defaultCamZoom = 0.9;
-				curStage = 'oldhell';
-				var bg:FlxSprite = new FlxSprite(300, 200).loadGraphic(Paths.image('ron/bg/madRon_ground'));
-				bg.setGraphicSize(Std.int(bg.width * 5));
-				bg.setGraphicSize(Std.int(bg.height * 5));
-				bg.antialiasing = true;
-				bg.scrollFactor.set(0.9, 0.9);
-				bg.active = false;
-				add(bg);
-			}
-			case 'oldglitch':
-				defaultCamZoom = 0.9;
-				curStage = 'oldglitch';
-				var bg:FlxSprite = new FlxSprite(-300, -100).loadGraphic(Paths.image('ron/bg/png'));
-					bg.setGraphicSize(Std.int(bg.width * 1.7));
-					bg.setGraphicSize(Std.int(bg.height * 1.7));
-					bg.antialiasing = true;
-					bg.scrollFactor.set(0.9, 0.9);
-					bg.active = false;
-					add(bg);
-					case 'oldNOGFHAHA':
-						defaultCamZoom = 0.9;
-						curStage = 'oldNOGFHAHA';
-						var bg:FlxSprite = new FlxSprite(-300, -100).loadGraphic(Paths.image('ron/bg/png'));
-							bg.setGraphicSize(Std.int(bg.width * 1.7));
-							bg.setGraphicSize(Std.int(bg.height * 1.7));
-							bg.antialiasing = true;
-							bg.scrollFactor.set(0.9, 0.9);
-							bg.active = false;
-							add(bg);
-			case 'oldbaka':
-				{
-					defaultCamZoom = 0.9;
-					curStage = 'oldbaka';
-					var bg:FlxSprite = new FlxSprite(300, 200).loadGraphic(Paths.image('ron/bg/unknown'));
-					bg.setGraphicSize(Std.int(bg.width * 4));
-					bg.setGraphicSize(Std.int(bg.height * 4));
-					bg.antialiasing = true;
-					bg.scrollFactor.set(0.9, 0.9);
-					bg.active = false;
-					add(bg);
-				}
-			case 'oldwin':
-				{
-					defaultCamZoom = 0.9;
-					curStage = 'oldwin';
-					var bg:FlxSprite = new FlxSprite(-100, -100).loadGraphic(Paths.image('ron/bg/bg'));
-					bg.setGraphicSize(Std.int(bg.width * 2));
-					bg.setGraphicSize(Std.int(bg.height * 2));
-					bg.antialiasing = true;
-					bg.scrollFactor.set(0.9, 0.9);
-					bg.active = false;
-					add(bg);
-				}
-			case 'olddefault':
-			{
-				defaultCamZoom = 0.9;
-				curStage = 'oldstage';
-				var bg:FlxSprite = new FlxSprite(300, 200).loadGraphic(Paths.image('ron/bg/kd'));
-				bg.setGraphicSize(Std.int(bg.width * 5));
-				bg.setGraphicSize(Std.int(bg.height * 5));
-				bg.antialiasing = true;
-				bg.scrollFactor.set(0.9, 0.9);
-				bg.active = false;
-				add(bg);
+				var sun:FlxSprite = new FlxSprite().loadGraphic(Paths.image('updateron/bg/bobtwerked/annoyed_sun'));
+				sun.setGraphicSize(Std.int(sun.width * 0.75));
+				sun.scrollFactor.set(0.2,0.2);
+				sun.updateHitbox();
+				sun.screenCenter(XY);
+				add(sun);
+				witheredRa = new FlxSprite(-512, -260);
+				witheredRa.frames = Paths.getSparrowAtlas('updateron/bg/annoyed_rain');
+				witheredRa.setGraphicSize(Std.int(witheredRa.width * 4));
+				witheredRa.animation.addByPrefix('rain', 'rain', 24, true);
+				witheredRa.updateHitbox();
+				witheredRa.antialiasing = true;
+				witheredRa.scrollFactor.set(0.5,0.1);
+				witheredRa.screenCenter(XY);
+				add(witheredRa);
+				witheredRa.animation.play('rain');
+				var wBackground:FlxSprite = new FlxSprite().loadGraphic(Paths.image('updateron/bg/bobtwerked/annoyed_back'));
+				wBackground.setGraphicSize(Std.int(wBackground.width * 0.95));
+				wBackground.scrollFactor.set(0.4,0.2);
+				wBackground.updateHitbox();
+				wBackground.screenCenter(XY);
+				add(wBackground);
+				witheredClouds = new FlxBackdrop(Paths.image('updateron/bg/bobtwerked/annoyed_cloud'), 0.2, 0, true, false);
+				witheredClouds.scrollFactor.set(0.2,0);
+				witheredClouds.screenCenter(XY);
+				witheredClouds.scale.set(0.5,0.5);
+				witheredClouds.y -= 360;
+				add(witheredClouds);
+				var ground:FlxSprite = new FlxSprite(260, -375).loadGraphic(Paths.image('updateron/bg/bobtwerked/annoyed_ground'));
+				ground.scale.set(1.1,1.1);
+				ground.scrollFactor.set(1,1);
+				ground.updateHitbox();
+				ground.screenCenter(X);
+				add(ground);	
+				fxtwo = new FlxSprite().loadGraphic(Paths.image('updateron/bg/bobtwerked/effect'));
+                fxtwo.updateHitbox();
+                fxtwo.active = false;
+                fxtwo.antialiasing = true;
+                fxtwo.screenCenter();
+                fxtwo.alpha = 0.2;
+                fxtwo.scrollFactor.set(0, 0);			
 			}
 			default:
 			{
@@ -1793,6 +1449,8 @@ class PlayState extends MusicBeatState
 			case 'ron-mad':
 				dad.x += 70;
 				dad.y += 250;
+				if (curSong == 'Withered')
+					dad.x -= 295;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
 			case 'ronmad-b':
 				dad.x += 70;
@@ -1937,10 +1595,9 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'holy-shit-dave-fnf':
 					schoolIntro2(doof2, false);
-				case 'oh-god-oh-fuck':
-					add(fx);
-					add(blackeffect);
+				case 'withered':
 					startCountdown();
+					add(fxtwo);
 				default:
 					startCountdown();
 			}
@@ -2686,6 +2343,8 @@ class PlayState extends MusicBeatState
 						if (force)
 						{
 							var sskin = 'NOTE_assets';
+							if (dad.curCharacter == 'dave')
+								sskin = 'ronsip';
 							babyArrow.frames = Paths.getSparrowAtlas(sskin);
 						}
 						else
@@ -2726,7 +2385,12 @@ class PlayState extends MusicBeatState
 						if (player == 0)
 							babyArrow.frames = Paths.getSparrowAtlas('ronsip');
 						else
-							babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets');
+						{
+							if (dad.curCharacter == 'dave')
+								babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets');
+							else
+								babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets');
+						}
 						
 						babyArrow.animation.addByPrefix('green', 'arrowUP');
 						babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
@@ -3299,7 +2963,8 @@ class PlayState extends MusicBeatState
 			iconP2.animation.curAnim.curFrame = 1;
 		else
 			iconP2.animation.curAnim.curFrame = 0;
-
+		
+		#if debug
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
 
@@ -3324,6 +2989,7 @@ class PlayState extends MusicBeatState
 			}
 			#end
 		}
+		#end
 
 		if (FlxG.keys.justPressed.ZERO)
 		{
@@ -3823,10 +3489,18 @@ class PlayState extends MusicBeatState
 									multiplier = multiplier + ((1-health));
 								FlxG.camera.shake(0.025 * multiplier/4, 0.1);
 								camHUD.shake(0.0055 * multiplier/4, 0.15);
-								if (health > 0.03)
-									health -= 0.014;
+								if (curSong == 'Withered')
+								{
+									// he doesn't give a fuck in withered
+									health -= 0.02;
+								}
 								else
-									health = 0.02;
+								{
+									if (health > 0.03)
+										health -= 0.014;
+									else
+										health = 0.02;
+								}
 							}
 						if (dad.curCharacter == 'ron-usb' || dad.curCharacter == 'ateloron')
 							{
@@ -5207,6 +4881,64 @@ class PlayState extends MusicBeatState
 			}
 		}
 		
+		if (curSong == 'Withered')
+		{
+			witheredClouds.x += 2;
+			switch (curStep)
+			{
+				case 1:
+					add(fxtwo);
+				case 16 | 32 | 48 | 60 | 72 | 96 | 112:
+					FlxG.camera.zoom += 0.02;
+					defaultCamZoom -= 0.02;
+				case 127: defaultCamZoom = 0.75;
+				case 128 | 260 | 320 | 336 | 368: defaultCamZoom += 0.1;
+				case 383: defaultCamZoom -= 0.5;
+				case 448 | 464 | 480 | 496: defaultCamZoom += 0.12;
+				case 512: defaultCamZoom -= 0.5;
+				//drop
+				case 576 | 592 | 608 | 624: defaultCamZoom += 0.12;
+				case 640: defaultCamZoom -= 0.5;
+				case 688: defaultCamZoom += 0.5;
+				case 704: defaultCamZoom -= 0.5;
+				case 720 | 736 | 752 | 760: defaultCamZoom += 0.12;
+				case 768: 
+					defaultCamZoom -= 0.5;
+					FlxTween.tween(fxtwo, {alpha: 0.5}, 1, {ease: FlxEase.expoOut,});
+				case 880: defaultCamZoom += 0.5;
+				case 896: defaultCamZoom -= 0.5;
+				case 1024: defaultCamZoom += 0.2;
+				case 1120:
+					defaultCamZoom += 0.3;
+					FlxTween.tween(fxtwo, {alpha: 1}, 1, {ease: FlxEase.expoOut,});
+					for (i in 0...4) { 
+						var member = PlayState.strumLineNotes.members[i];
+						FlxTween.tween(PlayState.strumLineNotes.members[i], { x: defaultStrumX[i]+ 1250 ,angle: 360}, 1);
+						defaultStrumX[i] += 1250;
+					}
+					for (i in 4...8) { 
+						var member = PlayState.strumLineNotes.members[i];
+						FlxTween.tween(PlayState.strumLineNotes.members[i], { x: defaultStrumX[i] - 275,angle: 360}, 1);
+						defaultStrumX[i] -= 275;
+					}
+				case 1152:
+					FlxG.camera.setFilters([ShadersHandler.chromaticAberration]);
+					camHUD.setFilters([ShadersHandler.chromaticAberration]);
+					var xx = dad.x;
+					var yy = dad.y;
+					remove(dad);
+					dad = new Character(xx+80, yy+80, 'hellron');
+					add(dad);
+					iconP2.animation.play('hellron');
+					healthBar.createFilledBar(0xFF000000, 0xFF31B0D1);
+				case 1216 | 1232 | 1248 | 1280: defaultCamZoom += 0.05;
+				case 1344 | 1376: defaultCamZoom -= 0.2;
+				case 1408:
+					defaultCamZoom = 0.75;
+					FlxTween.tween(fxtwo, {alpha: 0}, 1, {ease: FlxEase.expoOut,});
+			}
+		}
+		
 		if (curSong == 'bloodbath'){ // hi it me chromasen and im proud of this code because i made it:)
 			SCREWYOU = true;
 			ghosttapper = false;
@@ -5698,14 +5430,18 @@ class PlayState extends MusicBeatState
 			{
 				if (FlxG.save.data.rgbenable)
 				{
-					if (curSong != 'File-Manipulation')
-						setChrome(chromeOffset*FlxG.save.data.rgbintense);
-					else
+					switch (curSong)
 					{
-						var sinus = 1;
-						if (curStep >= 538)
-							sinus = 2 * Std.int(Math.sin((curStep - 538) / 3));
-						setChrome(chromeOffset*FlxG.save.data.rgbintense*sinus);
+						case 'File-Manipulation':
+							setChrome(chromeOffset*FlxG.save.data.rgbintense);
+						case 'Withered':
+							if (curStep >= 1152)
+								setChrome(chromeOffset*FlxG.save.data.rgbintense);
+						default:
+							var sinus = 1;
+							if (curStep >= 538)
+								sinus = 2 * Std.int(Math.sin((curStep - 538) / 3));
+							setChrome(chromeOffset*FlxG.save.data.rgbintense*sinus);
 					}
 				}
 				else

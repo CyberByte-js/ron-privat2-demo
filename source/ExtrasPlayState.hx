@@ -392,6 +392,8 @@ class ExtrasPlayState extends MusicBeatState
 			case 3:
 				clr = FlxColor.WHITE;
 			case 4:
+				clr = 0xFF000099;
+			case 5:
 				clr = FlxColor.BLACK;
 		}
 		
