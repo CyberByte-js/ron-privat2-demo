@@ -1061,21 +1061,14 @@ class PlayState extends MusicBeatState
 				witheredClouds.scrollFactor.set(0.2,0);
 				witheredClouds.screenCenter(XY);
 				witheredClouds.scale.set(0.5,0.5);
-				witheredClouds.y -= 360;
+				witheredClouds.y -= 180;
 				add(witheredClouds);
 				var ground:FlxSprite = new FlxSprite(260, -375).loadGraphic(Paths.image('updateron/bg/bobtwerked/annoyed_ground'));
 				ground.scale.set(1.1,1.1);
 				ground.scrollFactor.set(1,1);
 				ground.updateHitbox();
 				ground.screenCenter(X);
-				add(ground);	
-				fxtwo = new FlxSprite().loadGraphic(Paths.image('updateron/bg/bobtwerked/effect'));
-                fxtwo.updateHitbox();
-                fxtwo.active = false;
-                fxtwo.antialiasing = true;
-                fxtwo.screenCenter();
-                fxtwo.alpha = 0.2;
-                fxtwo.scrollFactor.set(0, 0);			
+				add(ground);					
 			}
 			default:
 			{
@@ -1390,6 +1383,19 @@ class PlayState extends MusicBeatState
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
 		
+		if (curSong == 'Withered')
+		{
+			fxtwo = new FlxSprite().loadGraphic(Paths.image('updateron/bg/bobtwerked/effect'));
+			fxtwo.scale.set(0.5,0.5);
+			fxtwo.updateHitbox();
+			fxtwo.antialiasing = true;
+			fxtwo.screenCenter();
+			fxtwo.alpha = 0.2;
+			fxtwo.scrollFactor.set(0, 0);	
+			add(fxtwo);
+			fxtwo.cameras = [camHUD];
+		}
+		
 		switch (SONG.player2)
 		{
 			case 'gf':
@@ -1595,9 +1601,6 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'holy-shit-dave-fnf':
 					schoolIntro2(doof2, false);
-				case 'withered':
-					startCountdown();
-					add(fxtwo);
 				default:
 					startCountdown();
 			}
@@ -3492,7 +3495,7 @@ class PlayState extends MusicBeatState
 								if (curSong == 'Withered')
 								{
 									// he doesn't give a fuck in withered
-									health -= 0.02;
+									health -= 0.0125;
 								}
 								else
 								{
@@ -4886,9 +4889,7 @@ class PlayState extends MusicBeatState
 			witheredClouds.x += 2;
 			switch (curStep)
 			{
-				case 1:
-					add(fxtwo);
-				case 16 | 32 | 48 | 60 | 72 | 96 | 112:
+				case 16 | 32 | 48 | 64 | 80 | 96 | 112:
 					FlxG.camera.zoom += 0.02;
 					defaultCamZoom -= 0.02;
 				case 127: defaultCamZoom = 0.75;
@@ -4906,11 +4907,20 @@ class PlayState extends MusicBeatState
 					defaultCamZoom -= 0.5;
 					FlxTween.tween(fxtwo, {alpha: 0.5}, 1, {ease: FlxEase.expoOut,});
 				case 880: defaultCamZoom += 0.5;
-				case 896: defaultCamZoom -= 0.5;
-				case 1024: defaultCamZoom += 0.2;
+				case 896: defaultCamZoom -= 0.4;
+				case 1024: defaultCamZoom += 0.1;
 				case 1120:
+					FlxG.camera.setFilters([ShadersHandler.chromaticAberration]);
+					camHUD.setFilters([ShadersHandler.chromaticAberration]);
+					var xx = dad.x;
+					var yy = dad.y;
+					remove(dad);
+					dad = new Character(xx+80, yy+80, 'hellron');
+					add(dad);
+					iconP2.animation.play('hellron');
+					healthBar.createFilledBar(0xFF000000, 0xFF31B0D1);
 					defaultCamZoom += 0.3;
-					FlxTween.tween(fxtwo, {alpha: 1}, 1, {ease: FlxEase.expoOut,});
+					FlxTween.tween(fxtwo, {alpha: 1}, 3, {ease: FlxEase.expoOut,});
 					for (i in 0...4) { 
 						var member = PlayState.strumLineNotes.members[i];
 						FlxTween.tween(PlayState.strumLineNotes.members[i], { x: defaultStrumX[i]+ 1250 ,angle: 360}, 1);
@@ -4921,16 +4931,6 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(PlayState.strumLineNotes.members[i], { x: defaultStrumX[i] - 275,angle: 360}, 1);
 						defaultStrumX[i] -= 275;
 					}
-				case 1152:
-					FlxG.camera.setFilters([ShadersHandler.chromaticAberration]);
-					camHUD.setFilters([ShadersHandler.chromaticAberration]);
-					var xx = dad.x;
-					var yy = dad.y;
-					remove(dad);
-					dad = new Character(xx+80, yy+80, 'hellron');
-					add(dad);
-					iconP2.animation.play('hellron');
-					healthBar.createFilledBar(0xFF000000, 0xFF31B0D1);
 				case 1216 | 1232 | 1248 | 1280: defaultCamZoom += 0.05;
 				case 1344 | 1376: defaultCamZoom -= 0.2;
 				case 1408:
@@ -5420,12 +5420,16 @@ class PlayState extends MusicBeatState
 				FlxTween.tween(blac, {alpha: 0}, 1, {ease: FlxEase.quadIn});
 			}
 		}
+		
+		var chromeOffset:Float = (((2 - health/2)/2+0.5));
+		chromeOffset /= 350;
 
-		if ((curSong == 'Atelophobia') || (curSong == 'Factory-Reset') || (curSong == 'Bloodshed') || (curSong == 'Bloodshed-b') || (curSong == 'Bloodshed-old') || (curSong == 'BLOODSHED-TWO') || (curSong == 'Factory-Reset-b') || (curSong == 'Atelophobia-b') || (curSong == 'Trojan-Virus') || (curSong == 'Trojan-Virus-b') || (curSong == 'File-Manipulation') || (curSong == 'File Manipulation-b') || (curSong == 'not-bloodshed')) {
-			var chromeOffset:Float = (((2 - health/2)/2+0.5));
-			chromeOffset /= 350;
+		if ((curSong == 'Atelophobia') || (curSong == 'Factory-Reset') || (curSong == 'Bloodshed') || (curSong == 'Bloodshed-b') || (curSong == 'Bloodshed-old') || (curSong == 'BLOODSHED-TWO') || (curSong == 'Factory-Reset-b') || (curSong == 'Atelophobia-b') || (curSong == 'Trojan-Virus') || (curSong == 'Trojan-Virus-b') || (curSong == 'File-Manipulation') || (curSong == 'File Manipulation-b') || (curSong == 'not-bloodshed')) 
+		{
 			if (chromeOffset <= 0)
+			{
 				setChrome(0.0);
+			}
 			else
 			{
 				if (FlxG.save.data.rgbenable)
@@ -5434,9 +5438,6 @@ class PlayState extends MusicBeatState
 					{
 						case 'File-Manipulation':
 							setChrome(chromeOffset*FlxG.save.data.rgbintense);
-						case 'Withered':
-							if (curStep >= 1152)
-								setChrome(chromeOffset*FlxG.save.data.rgbintense);
 						default:
 							var sinus = 1;
 							if (curStep >= 538)
@@ -5449,7 +5450,10 @@ class PlayState extends MusicBeatState
 			}
 		}
 		else
-			setChrome(0.0);
+		{
+			if ((curSong == 'Withered') && (curStep >= 1152))
+				setChrome(chromeOffset*FlxG.save.data.rgbintense);
+		}
 		
 		if ((curSong == 'wasted') || (curSong == 'Wasted-B'))
 		{
