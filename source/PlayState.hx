@@ -1175,7 +1175,7 @@ class PlayState extends MusicBeatState
 							FlxTween.tween(evilTrail, {x: dad.x -= 150}, 1);
 						if (dad.animation.curAnim.name.endsWith('RIGHT'))
 							FlxTween.tween(evilTrail, {x: dad.x += 150}, 1);
-						if (SONG.song == 'BLOODSHED-TWO')
+						if (SONG.song.toLowerCase() == 'bleeding')
 							remove(evilTrail);
 					}
 				}
