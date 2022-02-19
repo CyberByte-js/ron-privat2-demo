@@ -3873,7 +3873,6 @@ class PlayState extends MusicBeatState
 				switch(daRating)
 				{
 					case 'shit':
-<<<<<<< HEAD
 						if (!ghosttapper)
 						{
 							// haha fuck you
@@ -3900,7 +3899,6 @@ class PlayState extends MusicBeatState
 							if (FlxG.save.data.accuracyMod == 0)
 								totalNotesHit -= 1;
 						}
-=======
 						score = -300;
 						//combo = 0;
 						health -= 0.2;
@@ -3909,7 +3907,6 @@ class PlayState extends MusicBeatState
 						uhoh = false;
 						if (FlxG.save.data.accuracyMod == 0)
 							totalNotesHit -= 1;
->>>>>>> af7160d5ffb4702c865e8c48169228e1b0ae79aa
 					case 'bad':
 						daRating = 'bad';
 						score = 0;
@@ -4952,7 +4949,7 @@ class PlayState extends MusicBeatState
 					FlxTween.tween(fxtwo, {alpha: 0.5}, 1, {ease: FlxEase.expoOut,});
 				case 880: defaultCamZoom += 0.5;
 				case 896: defaultCamZoom -= 0.4;
-				case 1024: defaultCamZoom += 0.2;
+				case 1024: defaultCamZoom += 0.1;
 				case 1120:
 					FlxG.camera.setFilters([ShadersHandler.chromaticAberration]);
 					camHUD.setFilters([ShadersHandler.chromaticAberration]);
@@ -4975,7 +4972,7 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(PlayState.strumLineNotes.members[i], { x: defaultStrumX[i] - 275,angle: 360}, 2);
 						defaultStrumX[i] -= 275;
 					}
-				case 1216 | 1232 | 1248 | 1280: defaultCamZoom += 0.04;
+				case 1216 | 1232 | 1248 | 1280: defaultCamZoom += 0.05;
 				case 1344 | 1376: defaultCamZoom -= 0.2;
 				case 1408:
 					defaultCamZoom = 0.75;
