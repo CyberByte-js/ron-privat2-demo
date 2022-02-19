@@ -20,8 +20,6 @@ class GameOverSubstate extends MusicBeatSubstate
 		var daBf:String = '';
 		switch (PlayState.SONG.player1)
 		{
-			case 'bf-run':
-				daBf = 'bfbloodshed-death';
 			case 'bf-b':
 				daBf = 'bf-b';
 			case 'bf-pixel':
@@ -30,6 +28,8 @@ class GameOverSubstate extends MusicBeatSubstate
 			default:
 				daBf = 'bf';
 		}
+		if (PlayState.SONG.player2 == 'hellron')
+			daBf = 'bfbloodshed-death';
 
 		if (PlayState.SONG.player2 == 'hellron' || PlayState.SONG.player2 == 'devilron' || PlayState.storyWeek == 2)
 			stageSuffix = '-bloodshed';

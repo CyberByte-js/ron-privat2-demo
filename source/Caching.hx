@@ -41,6 +41,7 @@ class Caching extends MusicBeatState
 
 	override function create()
 	{
+		persistentDraw = true;
         FlxG.mouse.visible = false;
 
         FlxG.worldBounds.set(0,0);

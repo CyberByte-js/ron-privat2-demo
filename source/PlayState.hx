@@ -178,6 +178,7 @@ class PlayState extends MusicBeatState
 	public var iconP1:HealthIcon; //making these public again because i may be stupid
 	public var iconP2:HealthIcon; //what could go wrong?
 	public var camHUD:FlxCamera;
+	public var camOverlay:FlxCamera;
 	private var camGame:FlxCamera;
 
 	public static var offsetTesting:Bool = false;
@@ -361,10 +362,13 @@ class PlayState extends MusicBeatState
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
+		camOverlay = new FlxCamera();
+		camOverlay.bgColor.alpha = 0;	
 		camHUD.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD);
+		FlxG.cameras.add(camOverlay);
 
 		FlxCamera.defaultCameras = [camGame];
 		persistentUpdate = true;
@@ -1386,14 +1390,14 @@ class PlayState extends MusicBeatState
 		if (curSong == 'Withered')
 		{
 			fxtwo = new FlxSprite().loadGraphic(Paths.image('updateron/bg/bobtwerked/effect'));
-			fxtwo.scale.set(0.5,0.5);
+			fxtwo.scale.set(0.55,0.55);
 			fxtwo.updateHitbox();
 			fxtwo.antialiasing = true;
 			fxtwo.screenCenter();
 			fxtwo.alpha = 0.2;
 			fxtwo.scrollFactor.set(0, 0);	
 			add(fxtwo);
-			fxtwo.cameras = [camHUD];
+			fxtwo.cameras = [camOverlay];
 		}
 		
 		switch (SONG.player2)
@@ -1780,8 +1784,8 @@ class PlayState extends MusicBeatState
 		#end
 
 		var strtspd = Conductor.crochet / 1000;
-		if (songLowercase == 'bloodshed-two')
-			strtspd /= 5;
+		//if (PlayState.SONG.song == 'Bleeding')
+		//	strtspd /= 5;
 
 		talking = false;
 		startedCountdown = true;
@@ -2195,6 +2199,12 @@ class PlayState extends MusicBeatState
 							skin = 'NOTEold_assets';
 					}
 				}
+				else
+				{
+					skin = 'NOTE_assets';
+					if (dad.curCharacter == 'dave')
+						skin = 'ronsip';
+				}
 
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, skin, false, daNoteType);
 
@@ -2390,7 +2400,7 @@ class PlayState extends MusicBeatState
 						else
 						{
 							if (dad.curCharacter == 'dave')
-								babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets');
+								babyArrow.frames = Paths.getSparrowAtlas('ronsip');
 							else
 								babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets');
 						}
@@ -3863,18 +3873,38 @@ class PlayState extends MusicBeatState
 				switch(daRating)
 				{
 					case 'shit':
-						score = -300;
-						combo = 0;
-						health -= 0.2;
-						ss = false;
-						shits++;
-						uhoh = false;
-						if (FlxG.save.data.accuracyMod == 0)
-							totalNotesHit -= 1;
+						if (!ghosttapper)
+						{
+							// haha fuck you
+							score = -300;
+							combo = 0;
+							misses++;
+							health -= 0.3;
+							ss = false;
+							uhoh = true;
+							shits++;
+							if (FlxG.save.data.accuracyMod == 0)
+								totalNotesHit -= 1;
+								
+							boyfriend.playAnim('singDOWNmiss', true);
+						}
+						else
+						{
+							score = -300;
+							combo = 0;
+							health -= 0.2;
+							ss = false;
+							shits++;
+							uhoh = false;
+							if (FlxG.save.data.accuracyMod == 0)
+								totalNotesHit -= 1;
+						}
 					case 'bad':
 						daRating = 'bad';
 						score = 0;
 						health -= 0.06;
+						if (!ghosttapper)
+							health -= 0.09;
 						ss = false;
 						bads++;
 						uhoh = false;
@@ -3885,8 +3915,11 @@ class PlayState extends MusicBeatState
 						score = 200;
 						ss = false;
 						goods++;
-						if (health < 2)
-							health += 0.04;
+						if (ghosttapper)
+						{
+							if (health < 2)
+								health += 0.04;
+						}
 						uhoh = false;
 						if (FlxG.save.data.accuracyMod == 0)
 							totalNotesHit += 0.75;
@@ -4908,7 +4941,7 @@ class PlayState extends MusicBeatState
 					FlxTween.tween(fxtwo, {alpha: 0.5}, 1, {ease: FlxEase.expoOut,});
 				case 880: defaultCamZoom += 0.5;
 				case 896: defaultCamZoom -= 0.4;
-				case 1024: defaultCamZoom += 0.1;
+				case 1024: defaultCamZoom += 0.2;
 				case 1120:
 					FlxG.camera.setFilters([ShadersHandler.chromaticAberration]);
 					camHUD.setFilters([ShadersHandler.chromaticAberration]);
@@ -4920,18 +4953,18 @@ class PlayState extends MusicBeatState
 					iconP2.animation.play('hellron');
 					healthBar.createFilledBar(0xFF000000, 0xFF31B0D1);
 					defaultCamZoom += 0.3;
-					FlxTween.tween(fxtwo, {alpha: 1}, 3, {ease: FlxEase.expoOut,});
+					FlxTween.tween(fxtwo, {alpha: 1}, 8, {ease: FlxEase.expoOut,});
 					for (i in 0...4) { 
 						var member = PlayState.strumLineNotes.members[i];
-						FlxTween.tween(PlayState.strumLineNotes.members[i], { x: defaultStrumX[i]+ 1250 ,angle: 360}, 1);
+						FlxTween.tween(PlayState.strumLineNotes.members[i], { x: defaultStrumX[i]+ 1250 ,angle: 360}, 2);
 						defaultStrumX[i] += 1250;
 					}
 					for (i in 4...8) { 
 						var member = PlayState.strumLineNotes.members[i];
-						FlxTween.tween(PlayState.strumLineNotes.members[i], { x: defaultStrumX[i] - 275,angle: 360}, 1);
+						FlxTween.tween(PlayState.strumLineNotes.members[i], { x: defaultStrumX[i] - 275,angle: 360}, 2);
 						defaultStrumX[i] -= 275;
 					}
-				case 1216 | 1232 | 1248 | 1280: defaultCamZoom += 0.05;
+				case 1216 | 1232 | 1248 | 1280: defaultCamZoom += 0.04;
 				case 1344 | 1376: defaultCamZoom -= 0.2;
 				case 1408:
 					defaultCamZoom = 0.75;
@@ -4945,7 +4978,7 @@ class PlayState extends MusicBeatState
 			botPlayState.visible = true;
 			if (!PlayStateChangeables.botPlay)
 			{
-				botPlayState.text = "GHOST TAPPING IS DISABLED!";
+				botPlayState.text = "UNFORGIVING INPUT ENABLED!";
 				botPlayState.screenCenter(X);
 			}
             healthBarBG.alpha = 0;
@@ -5170,7 +5203,7 @@ class PlayState extends MusicBeatState
 					botPlayState.visible = true;
 					if (!PlayStateChangeables.botPlay)
 					{
-						botPlayState.text = "GHOST TAPPING IS DISABLED!";
+						botPlayState.text = "UNFORGIVING INPUT ENABLED!";
 						botPlayState.screenCenter(X);
 					}
 				case 384:
@@ -5195,7 +5228,7 @@ class PlayState extends MusicBeatState
 					ghosttapper = false;
 					botPlayState.visible = true;
 					if (!PlayStateChangeables.botPlay)
-						botPlayState.text = "GHOST TAPPING IS DISABLED!";
+						botPlayState.text = "UNFORGIVING INPUT ENABLED!";
 					var xx = dad.x;
 					var yy = dad.y;
 					remove(dad);
