@@ -25,7 +25,7 @@ class StoryMenuState extends MusicBeatState
 	var scoreText:FlxText;
 	var weekData:Array<Dynamic> = [
 		['Ron', 'Wasted', 'Ayo', 'Bloodshed'],
-		['Bloodbath', 'Bijuu', 'Holy-Shit-Dave-Fnf', 'Pretty-Wacky', 'Bleeding']
+		['Bloodbath', 'Bijuu', 'Holy-Shit-Dave-Fnf', 'Pretty-Wacky', 'Withered-Tweaked', 'Bleeding']
 	];
 
 	var curDifficulty:Int = 1;

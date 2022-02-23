@@ -46,6 +46,7 @@ class ExtrasPlayState extends MusicBeatState
 
 	override function create()
 	{
+		FlxG.camera.setFilters([ShadersHandler.chromaticAberration]);
 		var initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplaySonglistx'));
 
 		for (i in 0...initSonglist.length)
@@ -188,6 +189,14 @@ class ExtrasPlayState extends MusicBeatState
 	{
 		super.update(elapsed);
 
+		if (curSelected == 5)
+		{
+			FlxG.camera.shake(0.0075, 0.01);
+			setChrome(FlxG.save.data.rgbintense/200);
+		}
+		else
+			setChrome(0.0);
+			
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -295,18 +304,9 @@ class ExtrasPlayState extends MusicBeatState
 	}
 	
 	override function beatHit()
-	{
-		switch (curSelected)
-		{
-			case 0:
-				FlxG.camera.shake(0.0025, 0.05);
-				if (curBeat % 2 == 1)
-					FlxG.camera.zoom = 1.01;
-				else
-					FlxG.camera.zoom = 0.99;
-					
-				FlxTween.tween(FlxG.camera, {zoom: 1}, 0.2, {ease: FlxEase.quadInOut});
-		}
+	{	
+		if (curSelected < 5)
+			FlxG.camera.shake(0.0025, 0.05);
 	}
 
 	function changeSelection(change:Int = 0)
@@ -329,6 +329,17 @@ class ExtrasPlayState extends MusicBeatState
 			curDifficulty = 2;
 		if (curDifficulty > 2)
 			curDifficulty = 0;
+			
+		if (curSelected == 5)
+		{
+			FlxTween.cancelTweensOf(FlxG.camera);
+			FlxTween.tween(FlxG.camera, {zoom: 1.1}, 0.5, {ease: FlxEase.quadInOut});
+		}
+		else
+		{
+			FlxTween.cancelTweensOf(FlxG.camera);
+			FlxTween.tween(FlxG.camera, {zoom: 1}, 1, {ease: FlxEase.quadInOut});
+		}
 		
 		FlxG.camera.antialiasing = true;
 

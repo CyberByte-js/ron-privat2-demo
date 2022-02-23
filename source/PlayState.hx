@@ -1387,7 +1387,7 @@ class PlayState extends MusicBeatState
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
 		
-		if (curSong == 'Withered')
+		if (curSong == 'Withered-Tweaked')
 		{
 			fxtwo = new FlxSprite().loadGraphic(Paths.image('updateron/bg/bobtwerked/effect'));
 			fxtwo.scale.set(0.55,0.55);
@@ -1398,6 +1398,14 @@ class PlayState extends MusicBeatState
 			fxtwo.scrollFactor.set(0, 0);	
 			add(fxtwo);
 			fxtwo.cameras = [camOverlay];
+			var xx = dad.x;
+			var yy = dad.y;
+			remove(dad);
+			dad = new Character(xx+80, yy+80, 'hellron');
+			add(dad);
+			remove(dad);
+			dad = new Character(xx, yy, 'ron-mad');
+			add(dad);
 		}
 		
 		switch (SONG.player2)
@@ -1459,7 +1467,7 @@ class PlayState extends MusicBeatState
 			case 'ron-mad':
 				dad.x += 70;
 				dad.y += 250;
-				if (curSong == 'Withered')
+				if (curSong == 'Withered-Tweaked')
 					dad.x -= 295;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
 			case 'ronmad-b':
@@ -3004,7 +3012,7 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
-		if (FlxG.keys.justPressed.ZERO)
+		if (FlxG.keys.justPressed.FIVE)
 		{
 			FlxG.switchState(new AnimationDebug(SONG.player1));
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
@@ -3500,15 +3508,17 @@ class PlayState extends MusicBeatState
 									multiplier = 1;
 								else
 									multiplier = multiplier + ((1-health));
-								FlxG.camera.shake(0.025 * multiplier/4, 0.1);
+								
 								camHUD.shake(0.0055 * multiplier/4, 0.15);
-								if (curSong == 'Withered')
+								if (curSong == 'Withered-Tweaked')
 								{
 									// he doesn't give a fuck in withered
-									health -= 0.0125;
+									camGame.camera.shake(0.025 * multiplier/4, 0.1);
+									health -= 0.0135;
 								}
 								else
 								{
+									FlxG.camera.shake(0.025 * multiplier/4, 0.1);
 									if (health > 0.03)
 										health -= 0.014;
 									else
@@ -4925,7 +4935,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 		
-		if (curSong == 'Withered')
+		if (curSong == 'Withered-Tweaked')
 		{
 			witheredClouds.x += 2;
 			switch (curStep)
@@ -5492,7 +5502,7 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
-			if ((curSong == 'Withered') && (curStep >= 1152))
+			if ((curSong == 'Withered-Tweaked') && (curStep >= 1152))
 				setChrome(chromeOffset*FlxG.save.data.rgbintense);
 		}
 		
