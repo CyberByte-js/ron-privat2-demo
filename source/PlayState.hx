@@ -1792,8 +1792,6 @@ class PlayState extends MusicBeatState
 		#end
 
 		var strtspd = Conductor.crochet / 1000;
-		//if (PlayState.SONG.song == 'Bleeding')
-		//	strtspd /= 5;
 
 		talking = false;
 		startedCountdown = true;
@@ -3513,7 +3511,6 @@ class PlayState extends MusicBeatState
 								if (curSong == 'Withered-Tweaked')
 								{
 									// he doesn't give a fuck in withered
-									camGame.camera.shake(0.025 * multiplier/4, 0.1);
 									health -= 0.0135;
 								}
 								else
